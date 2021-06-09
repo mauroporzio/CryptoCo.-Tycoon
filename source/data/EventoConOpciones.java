@@ -1,5 +1,6 @@
 package data;
 
-public class EventoConOpciones {
+public class EventoConOpciones extends Evento
+{
 
 }

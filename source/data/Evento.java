@@ -1,5 +1,6 @@
 package data;
 
-public class Evento {
+public class Evento implements IProbabilidad
+{
 
 }

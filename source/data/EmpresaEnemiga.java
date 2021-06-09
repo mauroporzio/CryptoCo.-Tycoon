@@ -1,5 +1,6 @@
 package data;
 
-public class EmpresaEnemiga {
+public class EmpresaEnemiga extends Empresa implements IProbabilidad
+{
 
 }

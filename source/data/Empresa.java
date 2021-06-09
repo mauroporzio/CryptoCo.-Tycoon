@@ -1,5 +1,6 @@
 package data;
 
-public class Empresa {
+public abstract class Empresa
+{
 
 }

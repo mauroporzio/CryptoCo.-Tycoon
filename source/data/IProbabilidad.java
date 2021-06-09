@@ -1,5 +1,6 @@
 package data;
 
-public interface IProbabilidad {
+public interface IProbabilidad 
+{
 
 }

@@ -1,5 +1,6 @@
 package data;
 
-public class EmpresaUsuario {
+public class EmpresaUsuario extends Empresa
+{
 
 }
