@@ -13,7 +13,7 @@ public class EmpresaUsuario extends Empresa
 	static final int clientesInicFac = 500;  //--
 	
 	private ArrayList<Evento> histEventos; //se utiliza para almacenar un historial de los eventos por los que pasó la empresa a lo largo del juego.
-	private ArrayList<Modificador> modificadores; //Se utiliza para almacenar los modificadores activos que posee la empresa.
+	private ArrayList<Modificador> modificadores; //Se utiliza para almacenar los modificadores y los eventos activos que posee la empresa.
 	private int nClientes; //Variable donde se almacena el numero de clientes que posee la empresa.
 	private double comision; //Comision que cobra la empresa a cada cliente. Fuente principal de ingresos.
 	HashMap<Integer, Double> historialPatrimonio; //Key = mes ; Value= patrimonio en dicho mes. Se utiliza para almacenar el patrimonio que tuvo la empresa en cada mes. Se muestra al final del juego.
