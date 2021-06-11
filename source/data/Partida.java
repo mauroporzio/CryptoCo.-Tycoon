@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Partida implements IProbabilidad
 {
-	ArrayList<Evento> eventos;
-	ArrayList<EmpresaEnemiga> competencia;
-	EmpresaUsuario empresa;
+	private ArrayList<Evento> eventos;
+	private ArrayList<EmpresaEnemiga> competencia;
+	private EmpresaUsuario empresa;
 }
