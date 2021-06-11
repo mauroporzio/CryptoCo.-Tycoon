@@ -1,5 +1,6 @@
 package data;
 
-public class Modificador {
+public class Modificador 
+{
 
 }
