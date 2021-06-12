@@ -6,15 +6,6 @@ public abstract class Empresa
 	private String CEO; //nombre del jugador
 	private double patrimonio; //patrimonio de la empresa
 	
-	
-	
-	
-	public Empresa(String nombre, String CEO, double patrimonio)
-	{
-		setNombre(nombre);
-		setCEO(CEO);
-		setPatrimonio(patrimonio);
-	}
 
 	public String getNombre() {
 		return nombre;
