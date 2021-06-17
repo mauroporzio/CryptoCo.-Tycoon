@@ -22,13 +22,13 @@ public class Partida implements IProbabilidad
 		setDificultad(dificultad);
 	}
 	
-	public Partida(String nombre, String CEO, int dificultad, ArrayList<EmpresaEnemiga> competencia) //constructor para nueva partida.
+	public Partida(EmpresaUsuario empresa, ArrayList<EmpresaEnemiga> competencia) //constructor para nueva partida.
 	{
 		this.eventos = new ArrayList<Evento>();
 		cargarEventos();             //falta hacer la funcion de carga de los eventos desde el archivo.
 		this.competencia = new ArrayList<EmpresaEnemiga>();
 		this.competencia = competencia;
-		this.empresa = new EmpresaUsuario(dificultad, nombre, CEO);
+		this.empresa = empresa;
 		setDificultad(dificultad);
 	}
 	
