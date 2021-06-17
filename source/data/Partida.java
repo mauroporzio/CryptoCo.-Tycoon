@@ -42,6 +42,12 @@ public class Partida implements IProbabilidad
 	{
 		this.dificultad = dificultad;
 	}
+
+	@Override
+	public int calcularProbabilidad() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	
 	
