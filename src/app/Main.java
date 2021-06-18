@@ -1,15 +1,15 @@
 package app;
 
 import java.util.Scanner;
-import data.EmpresaUsuario;
-import data.Partida;
+import data.*;
+
 public class Main {
 		
 	static Scanner scan;
 	
 	public static void main(String[] args) {
 		scan = new Scanner(System.in);
-
+		
 		//Crear una nueva partida
 		// Partida partida = new Partida(crearEmpresa(), competencia);
 		
