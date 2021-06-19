@@ -14,13 +14,12 @@ public class Main {
 		Partida partida = null;
 		//------- variables -------
 		
-		
 		do {
 			opc = menuPrincipal();	//Muestra las opciones del menu principal y retorna la opcion elegida
 			
 			switch(opc) {
 				case 1:	//Nueva partida
-					partida = crearPartida();	//Se configura la empresa y la dificultad del juego. Retorna la partida actual
+					partida = nuevaPartida();	//Se configura la empresa y la dificultad del juego. Retorna la partida actual
 					break;
 					
 				case 2:
@@ -47,32 +46,6 @@ public class Main {
 		int opc = seleccionaOpcion();
 		
 		return opc;
-	}
-	
-	public static Partida crearPartida() {
-		System.out.println("¡Bienvenido al menú de nueva partida!\n");
-		
-		ArrayList<EmpresaEnemiga> competencia = new ArrayList<EmpresaEnemiga>();
-		//competencia.generarCompetencia();
-		
-		int dificultad = seleccionarDificultad(); 
-		
-		EmpresaUsuario empresa = new EmpresaUsuario(dificultad, seleccionarNombre("Nombre de la empresa"), seleccionarNombre("CEO"));
-		
-		Partida partida = new Partida(empresa, competencia, dificultad);
-		
-		return partida;
-	}
-	
-	public static String seleccionarNombre(String tipo) { //Verifica que sea un nombre que contenga vocales y lo devuelve 
-		//Ingresar por parametros que es lo que pide
-		String nombre = "";
-		System.out.print(" > "+tipo+": ");
-		nombre = scan.nextLine();
-		scan.next();
-		System.out.println(nombre);
-			
-		return nombre;
 	}
 	
 	public static int seleccionaOpcion(){
@@ -102,7 +75,6 @@ public class Main {
 		return dif;
 	}
 	
-	/*
 	public static Partida nuevaPartida()
 	{
 		
@@ -114,15 +86,13 @@ public class Main {
 		System.out.println("Seleccione una dificultad: ");
 		int dificultad = seleccionarDificultad();
 		
-		ArrayList<EmpresaEnemiga> competencia = competencia.generarCompetencia();
-		
+		ArrayList<EmpresaEnemiga> competencia = new ArrayList<EmpresaEnemiga>();
+		//competencia.generarCompetencia();
 		
 		EmpresaUsuario empresa = new EmpresaUsuario(dificultad, nombre, ceo);
 		Partida partida = new Partida(empresa,competencia, dificultad);
 		
-		
-		
 		return partida;
 	}
-	*/
+	
 }
