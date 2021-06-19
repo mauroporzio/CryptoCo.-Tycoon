@@ -8,7 +8,7 @@ public class Partida implements IProbabilidad
 	private ArrayList<EmpresaEnemiga> competencia;  //se utiliza para almacenar las empresas de la competencia, se carga desde archivo o se generan nuevas al empezar una nueva partida.
 	private EmpresaUsuario empresa;  //se utiliza para almacenar los datos de la empresa para el guardado o la carga de la partida.
 	private int dificultad;  //se almacena el nivel de dificultad elegido. 1=facil 2=medio 3=dificil
-	
+	private int mes;
 	
 	
 	
@@ -16,20 +16,22 @@ public class Partida implements IProbabilidad
 	{
 		this.eventos = new ArrayList<Evento>();
 		this.competencia = new ArrayList<EmpresaEnemiga>();
-		cargarEventos();           //falta hacer la funcion de carga de los eventos desde el archivo.
+		this.eventos = generarEventos();           //falta hacer la funcion de carga de los eventos desde el archivo. TEMPORAL
 		this.competencia = competencia;
 		this.empresa = empresa;
 		setDificultad(dificultad);
+		this.mes = 1;
 	}
 	
 	public Partida(EmpresaUsuario empresa, ArrayList<EmpresaEnemiga> competencia, int dificultad) //constructor para nueva partida.
 	{
 		this.eventos = new ArrayList<Evento>();
-		cargarEventos();             //falta hacer la funcion de carga de los eventos desde el archivo.
+		this.eventos = generarEventos();              //falta hacer la funcion de carga de los eventos desde el archivo. TEMPORAL
 		this.competencia = new ArrayList<EmpresaEnemiga>();
 		this.competencia = competencia;
 		this.empresa = empresa;
 		setDificultad(dificultad);
+		this.mes = 1;
 	}
 	
 	public void cargarEventos()
@@ -44,6 +46,10 @@ public class Partida implements IProbabilidad
 		this.dificultad = dificultad;
 	}
 
+	public EmpresaUsuario getEmpresa(){ return this.empresa; }
+
+	public int getMes(){ return this.mes; }
+
 	@Override
 	public int calcularProbabilidad() {
 		// TODO Auto-generated method stub
@@ -55,7 +61,24 @@ public class Partida implements IProbabilidad
 		return "Partida actual [Nombre de la empresa: "+empresa.getNombre()+" | CEO: "+empresa.getCEO()+" | Dificultad: "+getDificultad()+" ]";
 	}
 	
-	
+	public static ArrayList<Evento> generarEventos() //TEMPORAL
+	{
+		ArrayList<Evento> eventos = new ArrayList<Evento>();
+		int i = 0;
+		int max = 10;
+		
+		for(i=0;i<max;i++)
+		{
+			String aux = new String();
+			aux = "evento n°"+i;
+			
+			Evento evento1 = new Evento(aux,aux,false);
+			
+			eventos.add(evento1);
+		}
+		
+		return eventos;
+	}
 	
 }
 

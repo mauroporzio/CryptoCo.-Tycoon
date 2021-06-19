@@ -11,8 +11,7 @@ public class EmpresaEnemiga extends Empresa implements IProbabilidad
 	public int calcularProbabilidad() {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-	
+	}	
 	public EmpresaEnemiga(int dificultad, String nombre, String ceo)
 	{
 		setNombre(nombre);
@@ -33,23 +32,16 @@ public class EmpresaEnemiga extends Empresa implements IProbabilidad
 	}
 	
 	
-	/*
-	public ArrayList<EmpresaEnemiga> generarCompetencia(int dificultad)
-	{
-		ArrayList<EmpresaEnemiga> competencia = new ArrayList<EmpresaEnemiga>();
-		int i = 0;
-		int max = 10;
-		competencia = leerEmpresaEnemigaDeArchivo();
-		
-		return competencia;
-	}
 	
-	public EmpresaEnemiga leerEmpresasEnemigasDeArchivo()
+	
+	
+	/*public EmpresaEnemiga cargarEmpresas()
 	{
 		
 		
 		
-	}
-	*/
+	}*/
+	
+	
 	
 }
