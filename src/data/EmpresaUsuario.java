@@ -53,7 +53,6 @@ public class EmpresaUsuario extends Empresa
 			}
 		}
 		
-		
 	}
 	
 	public void setNClientes(int nClientes)
@@ -65,6 +64,14 @@ public class EmpresaUsuario extends Empresa
 	{
 		this.comision = comision;
 	}
+	
+	/*public HashMap<Integer, Double> getHistorialPatrimonio(){
+		return this.hitorialPatrimonio;
+	}
+	
+	public void actualizarHistorialPatrimonio(){
+		this.historialPatrimonio<
+	}*/
 	
 	
 	
