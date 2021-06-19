@@ -40,13 +40,16 @@ public class Main {
 		}while(opc != 0);
 	}
 	
-	public static void loopJuego(Partida partida){
+	public static void loopJuego(Partida partida)
+	{
 		int opc = 0;
-		do{
-			//partida = novedadesEventos(Partida partida)
-			opc = menuJuego();
+		do
+		{
+			ganancia =  ganancia + novedadesEventos(partida);
 			
-			switch(opc){
+			opc = menuJuego();
+			switch(opc)
+			{
 				case 0:
 					break;
 				
@@ -61,9 +64,11 @@ public class Main {
 					opc = -1;
 					System.out.println("Ingrese una opcion valida!");
 					break;
-			}	
+			}		
 			
 		}while(opc != 0);
+		
+		//hacer el guardado de la partida.
 		
 	}
 	
@@ -79,13 +84,37 @@ public class Main {
 		return opc;
 	}
 	
-	/*public static Partida novedadesEventos(Partida partida)
+	public static int novedadesEventos(Partida partida)
 	{
+		int ganancia = 0;
+		
 		for (int i=0; i < 5; i++)
 		{
+			Evento evento = partida.getArrayEventos().get(i);
+			printEvento(evento);
 			
+			if (evento instanceof EventoConOpciones)
+			{
+				EventoConOpciones eventoConOpc = (EventoConOpciones) evento;
+				
+				int opc = -1;
+				
+				do
+				{
+					if (opc < 0 || opc > eventoConOpc.getArrayOpciones().size())
+					{
+						ganancia = ganancia + eventoConOpc.getArrayDatos().get(opc);
+					}
+					else
+					{
+						System.out.println("Ingrese una opcion valida!");
+					}
+				}
+				while (opc < 0 || opc > eventoConOpc.getArrayOpciones().size());
+			}
 		}
-	}*/
+		return ganancia;
+	}
 	
 	public static void printEvento(Evento eventoAMostrar)
 	{
@@ -97,11 +126,15 @@ public class Main {
 			System.out.println(evento.getNombre() + "\n");
 			System.out.println(evento.getDescripcion() + "\n");
 			
+			System.out.println("Opciones: \n");
+			
 			ArrayList<String> arrayOpciones = evento.getArrayOpciones();
 			for (int i=0; i < arrayOpciones.size(); i++)
 			{
-				System.out.println(arrayOpciones.get(i) + "\n");
+				System.out.println(i + " -> " + arrayOpciones.get(i) + "\n");
 			}
+			
+			System.out.println("Elija una opcion \n");
 		}
 		else
 		{
