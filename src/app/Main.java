@@ -10,35 +10,72 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		//Partida partida = nuevaPartida();
+		int opc = 0;
+		Partida partida = null;
+		//------- variables -------
 		
+		
+		do {
+			opc = menuPrincipal();	//Muestra las opciones del menu principal y retorna la opcion elegida
+			
+			switch(opc) {
+				case 1:	//Nueva partida
+					partida = crearPartida();	//Se configura la empresa y la dificultad del juego. Retorna la partida actual
+					break;
+					
+				case 2:
+					//Partida partida = cargarPartida();
+					break;
+				
+				default:	//0 o default = salir
+					opc = 0;
+					break;
+			}
+			
+		}while(opc != 0);
 	}
 	
-	public static EmpresaUsuario crearEmpresa() {
-		System.out.println("<<<Menu creacion de empresa>>>");
-		EmpresaUsuario empresa = new EmpresaUsuario(seleccionarDificultad(), seleccionarNombre("Nombre de la empresa"), seleccionarNombre("CEO"));
-		return empresa;
+	public static int menuPrincipal() {
+		System.out.println("------- CryptoCo. Tycoon -------\n");
+		System.out.println("1-> Nueva partida");
+		System.out.println("2-> Cargar partida");
+		System.out.println("3-> Ver mejores partidas");
+		System.out.println("0-> Salir");
+		
+		int opc = seleccionaOpcion();
+		
+		return opc;
+	}
+	
+	public static Partida crearPartida() {
+		System.out.println("¡Bienvenido al menú de nueva partida!\n");
+		
+		ArrayList<EmpresaEnemiga> competencia = new ArrayList<EmpresaEnemiga>();
+		//competencia.generarCompetencia();
+		
+		int dificultad = seleccionarDificultad(); 
+		
+		EmpresaUsuario empresa = new EmpresaUsuario(dificultad, seleccionarNombre("Nombre de la empresa"), seleccionarNombre("CEO"));
+		
+		Partida partida = new Partida(empresa, competencia, dificultad);
+		
+		return partida;
 	}
 	
 	public static String seleccionarNombre(String tipo) { //Verifica que sea un nombre que contenga vocales y lo devuelve 
 		//Ingresar por parametros que es lo que pide
 		String nombre = "";
-		do {
-			System.out.print(" > "+tipo+": ");
-			nombre = scan.nextLine();
+		System.out.print(" > "+tipo+": ");
+		nombre = scan.nextLine();
+		scan.next();
+		System.out.println(nombre);
 			
-			if(!(nombre.contains("a") || nombre.contains("e") || nombre.contains("i") || nombre.contains("o") || nombre.contains("u"))) {
-				System.out.println("Porfavor ingrese un nombre con alguna vocal!");
-			}
-		}while(!(nombre.contains("a") || nombre.contains("e") || nombre.contains("i") || nombre.contains("o") || nombre.contains("u")));
-		
 		return nombre;
 	}
 	
 	public static int seleccionaOpcion(){
-		int opc = 0;
 		System.out.println("Por favor, ingrese un número dentro de las opciones y presione ENTER.");
-		opc = scan.nextInt();
+		int opc = scan.nextInt();
 		return opc;
 	}
 	
