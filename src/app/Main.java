@@ -32,6 +32,8 @@ public class Main {
 					break;
 			}
 			
+			//loopJuego(partida);
+			
 		}while(opc != 0);
 	}
 	
