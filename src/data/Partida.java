@@ -32,11 +32,12 @@ public class Partida implements IProbabilidad
 		setDificultad(dificultad);
 	}
 	
-	
 	public void cargarEventos()
 	{
 		
 	}
+	
+	public int getDificultad() { return this.dificultad; }
 	
 	public void setDificultad(int dificultad)
 	{
@@ -49,7 +50,10 @@ public class Partida implements IProbabilidad
 		return 0;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Partida actual [Nombre de la empresa: "+empresa.getNombre()+" | CEO: "+empresa.getCEO()+" | Dificultad: "+getDificultad()+" ]";
+	}
 	
 	
 	
