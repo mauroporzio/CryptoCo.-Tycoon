@@ -43,6 +43,7 @@ public class Main {
 	public static void loopJuego(Partida partida)
 	{
 		int opc = 0;
+		int ganancia = 0;
 		do
 		{
 			ganancia =  ganancia + novedadesEventos(partida);

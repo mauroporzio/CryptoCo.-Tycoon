@@ -80,6 +80,11 @@ public class Partida implements IProbabilidad
 		return eventos;
 	}
 	
+	public ArrayList<Evento> getArrayEventos()
+	{
+		return this.eventos;
+	}
+	
 }
 
 
