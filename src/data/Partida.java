@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 public class Partida implements IProbabilidad
 {
+	public static final String nombreArchivoEventos = "eventos.dat";
+	
 	private ArrayList<Evento> eventos;  //se utiliza para almacenar todos los eventos del juego, se carga desde archivo.
 	private ArrayList<EmpresaEnemiga> competencia;  //se utiliza para almacenar las empresas de la competencia, se carga desde archivo o se generan nuevas al empezar una nueva partida.
 	private EmpresaUsuario empresa;  //se utiliza para almacenar los datos de la empresa para el guardado o la carga de la partida.
@@ -35,9 +37,9 @@ public class Partida implements IProbabilidad
 		this.mes = 1;
 	}
 	
-	public void cargarEventos()
+	public void cargarEventos() // guarda el arreglo de eventos que vienen del archivo correspondiente
 	{
-		
+		this.eventos = new Util().leerEventos(nombreArchivoEventos);
 	}
 	
 	public int getDificultad() { return this.dificultad; }
