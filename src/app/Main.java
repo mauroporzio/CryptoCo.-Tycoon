@@ -265,6 +265,8 @@ public class Main {
 		System.out.println("finanzas y los eventos y modificadores activos o también puedes saltar al siguiente mes.\n");
 		System.out.println("  Estos eventos activos de los que te comenté, se tratan de los eventos que pueden, una\n");
 		System.out.println("vez aparecen, mantenerse a lo largo de algunos meses y actuar sobre tus ganancias finales del mes.\n");
+		System.out.println("  El objetivo del juego es muy simple, aumenta tus ganancias, sobrevive a los eventos, y por supuesto...");
+		System.out.println("                                ¡APLASTA A TU COMPETENCIA!");
 		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!");
 		scan.nextLine();
 	}
