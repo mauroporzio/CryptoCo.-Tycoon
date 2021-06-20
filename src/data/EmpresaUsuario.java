@@ -65,13 +65,9 @@ public class EmpresaUsuario extends Empresa
 		this.comision = comision;
 	}
 	
-	/*public HashMap<Integer, Double> getHistorialPatrimonio(){
-		return this.hitorialPatrimonio;
+	public HashMap<Integer, Double> getHistorialPatrimonio(){
+		return this.historialPatrimonio;
 	}
-	
-	public void actualizarHistorialPatrimonio(){
-		this.historialPatrimonio<
-	}*/
 	
 	
 	

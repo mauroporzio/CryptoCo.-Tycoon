@@ -40,13 +40,33 @@ public class Main {
 		}while(opc != 0);
 	}
 	
+	public static int menuPrincipal() {
+		System.out.println("------- CryptoCo. Tycoon -------\n");
+		System.out.println("1-> Nueva partida");
+		System.out.println("2-> Cargar partida");
+		System.out.println("3-> Ver mejores partidas");
+		System.out.println("0-> Salir");
+		
+		int opc = seleccionaOpcion();
+		
+		return opc;
+	}
+	
+	public static int seleccionaOpcion(){
+		System.out.println("Por favor, ingrese un número dentro de las opciones y presione ENTER.");
+		int opc = scan.nextInt();
+		return opc;
+	}
+	
 	public static void loopJuego(Partida partida)
 	{
-		int opc = 0;
+		int opc = 3;
 		int ganancia = 0;
 		do
 		{
-			ganancia =  ganancia + novedadesEventos(partida);
+			if(opc == 3) {
+				ganancia =  ganancia + novedadesEventos(partida);
+			}
 			
 			opc = menuJuego();
 			switch(opc)
@@ -59,6 +79,11 @@ public class Main {
 					break;
 				
 				case 2:
+					//verEventos();
+					break;
+					
+				case 3:
+					//partida.avanzarMes();
 					break;
 				
 				default:
@@ -66,6 +91,10 @@ public class Main {
 					System.out.println("Ingrese una opcion valida!");
 					break;
 			}		
+			
+			if(opc != 0 && opc != -1) {
+				pausarEjecucion();
+			}
 			
 		}while(opc != 0);
 		
@@ -75,10 +104,10 @@ public class Main {
 	
 	public static int menuJuego(){
 		System.out.println("\nMenu:");
-		System.out.println("1-> Finanzas"); 
-		System.out.println("2-> Ver eventos activos y sus modificadores");
-		System.out.println("3-> Siguiente mes.");
-		System.out.println("0-> Salir");
+		System.out.println("1-> Finanzas."); 
+		System.out.println("2-> Ver eventos activos y sus modificadores.");
+		System.out.println("3-> Avanzar mes.");
+		System.out.println("0-> Salir.");
 		
 		int opc = seleccionaOpcion();
 		
@@ -146,34 +175,18 @@ public class Main {
 	}
 	
 	public static void mostrarFinanzas(EmpresaUsuario empresa){
-		System.out.println("Finanzas -> "+empresa.getNombre()+" <-\n");
-		System.out.println("Patrimonio: "+empresa.getPatrimonio());
-		System.out.println("Patrimonio ultimos tres meses");
-	}
+		int n = empresa.getHistorialPatrimonio().size() ;
+		System.out.println("===============================");
+		System.out.println(" Finanzas mes" + n + " -> " + empresa.getNombre() + " <- \n");
+		System.out.println(" Patrimonio: " + empresa.getPatrimonio());
 	
-	/*public static void mostrarHistorialPatrimonio(Partida partida){
-		
-		for(int i = 1; i < partida.getMes()){
-			System.out.println(" > Mes "+i+": $"+partida.getEmpresa().);
+		System.out.println(" Patrimonio ultimos tres meses:");
+		//Si los meses cargados en el historial son inferiores a 3, se muestran los cargados hasta la fecha (2,1 o 0)
+		for(int i = n-3; i < n; i++) {
+			if(i > 0) {
+				System.out.println("  > Mes " + i + ": $" + empresa.getHistorialPatrimonio().get(i));
+			}
 		}
-	}*/
-	
-	public static int menuPrincipal() {
-		System.out.println("------- CryptoCo. Tycoon -------\n");
-		System.out.println("1-> Nueva partida");
-		System.out.println("2-> Cargar partida");
-		System.out.println("3-> Ver mejores partidas");
-		System.out.println("0-> Salir");
-		
-		int opc = seleccionaOpcion();
-		
-		return opc;
-	}
-	
-	public static int seleccionaOpcion(){
-		System.out.println("Por favor, ingrese un número dentro de las opciones y presione ENTER.");
-		int opc = scan.nextInt();
-		return opc;
 	}
 	
 	public static int seleccionarDificultad() {
@@ -234,7 +247,10 @@ public class Main {
 		return competencia;
 	}
 	
-	
+	public static void pausarEjecucion() {
+		System.out.println("Presione cualquier tecla para continuar");
+		scan.nextLine();
+	}
 	
 	
 }

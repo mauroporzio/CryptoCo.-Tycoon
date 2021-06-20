@@ -1,6 +1,7 @@
 package data;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Partida implements IProbabilidad
 {
@@ -49,17 +50,6 @@ public class Partida implements IProbabilidad
 	public EmpresaUsuario getEmpresa(){ return this.empresa; }
 
 	public int getMes(){ return this.mes; }
-
-	@Override
-	public int calcularProbabilidad() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
-	@Override
-	public String toString() {
-		return "Partida actual [Nombre de la empresa: "+empresa.getNombre()+" | CEO: "+empresa.getCEO()+" | Dificultad: "+getDificultad()+" ]";
-	}
 	
 	public static ArrayList<Evento> generarEventos() //TEMPORAL
 	{
@@ -84,7 +74,21 @@ public class Partida implements IProbabilidad
 	{
 		return this.eventos;
 	}
+
+	public void actualizarHistorialPatrimonio(Double valor){
+		this.empresa.getHistorialPatrimonio().put(getMes(), valor);
+	}
+
+	@Override
+	public int calcularProbabilidad() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
+	@Override
+	public String toString() {
+		return "Partida actual [Nombre de la empresa: "+empresa.getNombre()+" | CEO: "+empresa.getCEO()+" | Dificultad: "+getDificultad()+" ]";
+	}
 }
 
 
