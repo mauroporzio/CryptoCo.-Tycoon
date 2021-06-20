@@ -7,7 +7,6 @@ import data.*;
 public class Main {
 		
 	static Scanner scan = new Scanner(System.in);
-	
 	public static void main(String[] args) {
 		
 		int opc = 0;
@@ -20,6 +19,7 @@ public class Main {
 			switch(opc) {
 				case 1:	//Nueva partida
 					partida = nuevaPartida();	//Se configura la empresa y la dificultad del juego. Retorna la partida actual
+					explicacionJuego(partida.getEmpresa().getCEO());
 					break;
 					
 				case 2:
@@ -251,6 +251,27 @@ public class Main {
 		System.out.println("Presione cualquier tecla para continuar");
 		scan.nextLine();
 	}
+	
+	public static void explicacionJuego(String nombre)
+	{
+		System.out.println("\n\n");
+		System.out.println("Hola "+ nombre + " bienvenido a CryptoCo. Tycoon!\n");
+		System.out.println("A continuación te explico rápidamente el juego: \n");
+		System.out.println("\n  Una vez oprima continuar, se mostrarán 4 eventos correspondientes al primer mes\n");
+		System.out.println("del curso de la empresa, esos 4 eventos pueden ser tanto positivos como negativos, y\n");
+		System.out.println("pueden o no tener opciones sobre las que tendrás que tomar una decisión. En caso de\n");
+		System.out.println("que salga uno de esos, tendrás que ingresar una opción antes de continuar.\n");
+		System.out.println("  Luego de ver los eventos y tomar tus decisiones, llega la parte donde revisas tus\n");
+		System.out.println("finanzas y los eventos y modificadores activos o también puedes saltar al siguiente mes.\n");
+		System.out.println("  Estos eventos activos de los que te comenté, se tratan de los eventos que pueden, una\n");
+		System.out.println("vez aparecen, mantenerse a lo largo de algunos meses y actuar sobre tus ganancias finales del mes.\n");
+		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!");
+		scan.nextLine();
+	}
+	
+	
+	
+	
 	
 	
 }
