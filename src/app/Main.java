@@ -3,10 +3,14 @@ package app;
 import java.util.ArrayList;
 import java.util.Scanner;
 import data.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
 		
 	static Scanner scan = new Scanner(System.in);
+	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	public static void main(String[] args) {
 		
 		int opc = 0;
@@ -224,7 +228,7 @@ public class Main {
 		}
 		else
 		{
-			System.out.println("<<<Evento>>>\n");
+			System.out.println("\n<<<Evento>>>\n");
 			System.out.println(eventoAMostrar.getNombre() + "\n");
 			System.out.println(eventoAMostrar.getDescripcion() + "\n");
 		}
@@ -324,8 +328,14 @@ public class Main {
 		System.out.println("vez aparecen, mantenerse a lo largo de algunos meses y actuar sobre tus ganancias finales del mes.\n");
 		System.out.println("  El objetivo del juego es muy simple, aumenta tus ganancias, sobrevive a los eventos, y por supuesto...");
 		System.out.println("                                ¡APLASTA A TU COMPETENCIA!");
-		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!");
-		scan.nextLine();
+		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!-\n\n");
+		String sTexto = new String();
+		try
+	    {
+			sTexto = br.readLine();
+	    }
+	    catch(Exception e)
+	    {}
 	}
 
 }
