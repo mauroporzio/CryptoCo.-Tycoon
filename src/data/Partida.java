@@ -1,10 +1,13 @@
 package data;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Partida implements IProbabilidad
+public class Partida implements IProbabilidad, Serializable
 {
+	private static final long serialVersionUID = 1L;
+
 	public static final String nombreArchivoEventos = "eventos.dat";
 	
 	private ArrayList<Evento> eventos;  //se utiliza para almacenar todos los eventos del juego, se carga desde archivo.

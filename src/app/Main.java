@@ -22,10 +22,9 @@ public class Main {
 					explicacionJuego(partida.getEmpresa().getCEO());
 					break;
 					
-				case 2:
-					//Partida partida = cargarPartida();
+				case 2: //Cargar Partida
+					partida = menuCargarPartida();
 					break;
-					
 				case 3:
 					//verMejoresPartidas();	
 					break;
@@ -35,7 +34,10 @@ public class Main {
 					break;
 			}
 			
-			loopJuego(partida);
+			if (partida != null)
+			{
+				loopJuego(partida);
+			}
 			
 		}while(opc != 0);
 	}
@@ -56,6 +58,58 @@ public class Main {
 		System.out.println("Por favor, ingrese un número dentro de las opciones y presione ENTER.");
 		int opc = scan.nextInt();
 		return opc;
+	}
+	
+	public static Partida menuCargarPartida() // muestra todas las partidas disponibles, pide cual se quiere cargar y se devuelve esa partida.
+	{
+		int opc = -1;
+		int opc2 = 0;
+		ArrayList<String> arrayNomPartidas = new Util().partidasDisponibles();
+		Partida partida = null;
+		
+		if (arrayNomPartidas.size() > 0)
+		{
+			while (opc < 0 || opc > arrayNomPartidas.size())
+			{
+				System.out.println("<<< Cargar Partida >>>");
+				int i=0;
+				
+				for (String nombreE : arrayNomPartidas)
+				{
+					System.out.println(" - Ingrese (" + i + ") para cargar: " + nombreE);
+					i++;
+				}
+				System.out.println(" - Ingrese (" + arrayNomPartidas.size() + ") para cancelar");
+				
+				opc = seleccionaOpcion();
+			}
+			
+			if (opc != arrayNomPartidas.size())
+			{
+				partida = new Util().cargarPartida(arrayNomPartidas.get(opc));
+			}
+		}
+		else
+		{	
+			while(opc2 != 1 && opc2 != 2)
+			{
+				System.out.println("No hay partidas para cargar");
+				System.out.println("Desea crear una partida nueva?");
+				
+				System.out.println(" - 1 para SI");
+				System.out.println(" - 2 para NO");
+				
+				opc2 = seleccionaOpcion();
+				
+			}
+			
+			if (opc2 == 1)
+			{
+				partida = nuevaPartida();
+			}
+		}
+		
+		return partida;
 	}
 	
 	public static void loopJuego(Partida partida)
@@ -98,8 +152,10 @@ public class Main {
 			
 		}while(opc != 0);
 		
-		//hacer el guardado de la partida.
-		
+		if (new Util().guardarPartida(partida))
+		{
+			System.out.println("Se guardo correctamente la partida!");
+		}
 	}
 	
 	public static int menuJuego(){
@@ -107,7 +163,7 @@ public class Main {
 		System.out.println("1-> Finanzas."); 
 		System.out.println("2-> Ver eventos activos y sus modificadores.");
 		System.out.println("3-> Avanzar mes.");
-		System.out.println("0-> Salir.");
+		System.out.println("0-> Salir y Guardar.");
 		
 		int opc = seleccionaOpcion();
 		
@@ -270,10 +326,5 @@ public class Main {
 		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!");
 		scan.nextLine();
 	}
-	
-	
-	
-	
-	
-	
+
 }

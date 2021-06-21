@@ -1,7 +1,10 @@
 package data;
 
-public abstract class Empresa
+import java.io.Serializable;
+
+public abstract class Empresa implements Serializable
 {
+	private static final long serialVersionUID = 2L;
 	private String nombre; //nombre de la empresa
 	private String CEO; //nombre del jugador
 	private double patrimonio; //patrimonio de la empresa
