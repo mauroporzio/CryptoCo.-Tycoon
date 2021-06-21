@@ -83,6 +83,10 @@ public class Partida implements IProbabilidad, Serializable
 	public void actualizarHistorialPatrimonio(Double valor){
 		this.empresa.getHistorialPatrimonio().put(getMes(), valor);
 	}
+	
+	public void actualizarMes(){
+		this.mes++;
+	}
 
 	@Override
 	public int calcularProbabilidad() {
