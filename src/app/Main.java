@@ -241,35 +241,48 @@ public class Main {
 		int opc = 0;
 		do{
 			System.out.println("===============================");
-			System.out.println("Menu Finanzas:");
+			System.out.println(" Menu Finanzas:");
 			System.out.println(" <1> Ver patrimonio");
 			System.out.println(" <2> Historial completo");
 			System.out.println(" <0> Atras");
+			System.out.println("===============================");
 			opc = seleccionaOpcion();
 			if(opc < 0 || opc > 2){
 				System.out.println("Ingrese una opcion valida!");
 			}
 			
-			if(opc == 1){
-				int n = empresa.getHistorialPatrimonio().size();	
-				System.out.println(" Finanzas mes " + n + " -> " + empresa.getNombre() + " <- \n");
-				System.out.println(" Patrimonio: " + empresa.getPatrimonio());
-			
-				if(n > 0){	//Verifica que haya cargado algo en el historial
-					System.out.println(" Patrimonio ultimos tres meses:"); //Recorre los ultimso 3 patrimonios que se encuentran en el historial
-					for(int i = n-3; i < n+1; i++) {	//Posiciona i 3 meses antes y a n en el mes actual
-						if(i > 0) {		//Si los meses cargados en el historial son inferiores a 3, se muestran los cargados hasta la fecha (2,1 o 0)
-							System.out.println("  > Mes " + i + ": $" + empresa.mesEspecificoPatrimonio(i));
+			if(opc > 0 && opc < 3){
+				int n = empresa.getHistorialPatrimonio().size();
+				
+				System.out.println("\n*******************************");
+				switch(opc){
+					case 1:
+						System.out.println(" > Finanzas mes " + n +"\n");
+						System.out.println(" > Patrimonio: $" + empresa.getPatrimonio());
+						
+						if(n > 0){	//Verifica que haya cargado algo en el historial
+							System.out.println(" > Patrimonio ultimos tres meses:"); //Recorre los ultimso 3 patrimonios que se encuentran en el historial
+							
+							for(int i = n-3; i < n+1; i++) {	//Posiciona i 3 meses antes y a n en el mes actual
+								if(i > 0) {		//Si los meses cargados en el historial son inferiores a 3, se muestran los cargados hasta la fecha (2,1 o 0)
+									System.out.println("  Mes <" + i + ">: $" + empresa.mesEspecificoPatrimonio(i));
+								}
+							}
 						}
-					}
+						break;
+						
+					case 2:	//Muestra el historial de patrimonios desde que se creo la empresa hasta la fecha actual
+						if(n > 0) {	//Verifica que haya algo que mostrar
+							for(int i = 1; i < empresa.getHistorialPatrimonio().size() + 1 ; i++){ 
+								System.out.println("   Mes <" + i + ">: $" + empresa.mesEspecificoPatrimonio(i));
+							}
+						}else {
+							System.out.println("Historial vacio, a partir del segundo mes se habilitara!");
+						}
+						break;
 				}
-					pausarEjecucion();
-			}
-			
-			if(opc == 2){	//Muestra el historial de patrimonios desde que se creo la empresa hasta la fecha actual
-				for(int i = 1; i < empresa.getHistorialPatrimonio().size() + 1 ; i++){ 
-					System.out.println("  > Mes " + i + ": $" + empresa.mesEspecificoPatrimonio(i));
-				}
+				System.out.println("*******************************");
+				System.out.println("\n");
 				pausarEjecucion();
 			}
 			
@@ -394,8 +407,8 @@ public class Main {
 	}
 	
 	public static void pausarEjecucion() {
-		System.out.println("Presione cualquier tecla para continuar");
-		scan.nextLine();
+		System.out.println("Seleccione cualquier tecla y presione ENTER");
+		scan.next();
 	}
 	
 	public static void explicacionJuego(String nombre)
