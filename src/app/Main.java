@@ -271,9 +271,10 @@ public class Main {
 		
 		System.out.println("¡Bienvenido al menú de nueva partida!");
 		System.out.println("Nombre del CEO (usuario): ");
-		String ceo = scan.next();
+		String ceo = scan.nextLine();
+		scan.nextLine(); // clean buffer.
 		System.out.println("Nombre de la empresa: ");
-		String nombre = scan.next();
+		String nombre = scan.nextLine();
 		System.out.println("Seleccione una dificultad: ");
 		int dificultad = seleccionarDificultad();
 		

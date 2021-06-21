@@ -64,7 +64,8 @@ public class Util
 		
 		try 
 		{
-			FileOutputStream fosPartida = new FileOutputStream(partida.getEmpresa().getNombre() + ".dat"); // fos de la partida a guardar.
+			String nombreArchivo = partida.getEmpresa().getNombre().replaceAll("\\s", "") + ".dat";
+			FileOutputStream fosPartida = new FileOutputStream(nombreArchivo); // fos de la partida a guardar.
 			
 			try
 			{
@@ -166,7 +167,8 @@ public class Util
 
 		try 
 		{
-			FileInputStream fis = new FileInputStream(nombreEmpresa + ".dat");
+			String nombreArchivo = nombreEmpresa.replaceAll("\\s", "") + ".dat";
+			FileInputStream fis = new FileInputStream(nombreArchivo);
 			
 			while (encontrado)
 			{
