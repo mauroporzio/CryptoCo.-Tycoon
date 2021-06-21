@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import data.*;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
@@ -23,7 +22,8 @@ public class Main {
 			switch(opc) {
 				case 1:	//Nueva partida
 					partida = nuevaPartida();	//Se configura la empresa y la dificultad del juego. Retorna la partida actual
-					explicacionJuego(partida.getEmpresa().getCEO());
+					new Util().guardarPartida(partida); //guarda la partida recién creada
+					explicacionJuego(partida.getEmpresa().getCEO()); //muestra una explicacion básica del funcionamiento del juego
 					break;
 					
 				case 2: //Cargar Partida
@@ -116,12 +116,14 @@ public class Main {
 		return partida;
 	}
 	
-	public static void loopJuego(Partida partida)
+	public static void loopJuego(Partida partida) //loop general del juego
 	{
 		int opc = 3;
 		int ganancia = 0;
 		do
 		{
+			partida.actualizarMes();
+			
 			if(opc == 3) {
 				ganancia =  ganancia + novedadesEventos(partida);
 			}
@@ -133,7 +135,7 @@ public class Main {
 					break;
 				
 				case 1:	//
-					mostrarFinanzas(partida.getEmpresa());
+					menuFinanzas(partida.getEmpresa());
 					break;
 				
 				case 2:
@@ -148,6 +150,8 @@ public class Main {
 					opc = -1;
 					System.out.println("Ingrese una opcion valida!");
 					break;
+					
+				//partida = actualizarCambios(partida);
 			}		
 			
 			if(opc != 0 && opc != -1) {
@@ -167,8 +171,7 @@ public class Main {
 		System.out.println("1-> Finanzas."); 
 		System.out.println("2-> Ver eventos activos y sus modificadores.");
 		System.out.println("3-> Avanzar mes.");
-		System.out.println("0-> Salir y Guardar.");
-		
+		System.out.println("0-> Guardar y salir.");
 		int opc = seleccionaOpcion();
 		
 		return opc;
@@ -191,7 +194,7 @@ public class Main {
 				
 				do
 				{
-					if (opc < 0 || opc > eventoConOpc.getArrayOpciones().size())
+					if (opc > 0 && opc <= eventoConOpc.getArrayOpciones().size())
 					{
 						ganancia = ganancia + eventoConOpc.getArrayDatos().get(opc);
 					}
@@ -206,7 +209,7 @@ public class Main {
 		return ganancia;
 	}
 	
-	public static void printEvento(Evento eventoAMostrar)
+	public static void printEvento(Evento eventoAMostrar) //se utiliza para mostrar los eventos 
 	{
 		if (eventoAMostrar instanceof EventoConOpciones)
 		{
@@ -234,22 +237,52 @@ public class Main {
 		}
 	}
 	
-	public static void mostrarFinanzas(EmpresaUsuario empresa){
-		int n = empresa.getHistorialPatrimonio().size() ;
-		System.out.println("===============================");
-		System.out.println(" Finanzas mes" + n + " -> " + empresa.getNombre() + " <- \n");
-		System.out.println(" Patrimonio: " + empresa.getPatrimonio());
-	
-		System.out.println(" Patrimonio ultimos tres meses:");
-		//Si los meses cargados en el historial son inferiores a 3, se muestran los cargados hasta la fecha (2,1 o 0)
-		for(int i = n-3; i < n; i++) {
-			if(i > 0) {
-				System.out.println("  > Mes " + i + ": $" + empresa.getHistorialPatrimonio().get(i));
+	public static void menuFinanzas(EmpresaUsuario empresa){
+		int opc = 0;
+		do{
+			System.out.println("===============================");
+			System.out.println("Menu Finanzas:");
+			System.out.println(" <1> Ver patrimonio");
+			System.out.println(" <2> Historial completo");
+			System.out.println(" <0> Atras");
+			opc = seleccionaOpcion();
+			if(opc < 0 || opc > 2){
+				System.out.println("Ingrese una opcion valida!");
 			}
-		}
+			
+			if(opc == 1){
+				int n = empresa.getHistorialPatrimonio().size();	
+				System.out.println(" Finanzas mes " + n + " -> " + empresa.getNombre() + " <- \n");
+				System.out.println(" Patrimonio: " + empresa.getPatrimonio());
+			
+				if(n > 0){	//Verifica que haya cargado algo en el historial
+					System.out.println(" Patrimonio ultimos tres meses:"); //Recorre los ultimso 3 patrimonios que se encuentran en el historial
+					for(int i = n-3; i < n+1; i++) {	//Posiciona i 3 meses antes y a n en el mes actual
+						if(i > 0) {		//Si los meses cargados en el historial son inferiores a 3, se muestran los cargados hasta la fecha (2,1 o 0)
+							System.out.println("  > Mes " + i + ": $" + empresa.mesEspecificoPatrimonio(i));
+						}
+					}
+				}
+					pausarEjecucion();
+			}
+			
+			if(opc == 2){	//Muestra el historial de patrimonios desde que se creo la empresa hasta la fecha actual
+				for(int i = 1; i < empresa.getHistorialPatrimonio().size() + 1 ; i++){ 
+					System.out.println("  > Mes " + i + ": $" + empresa.mesEspecificoPatrimonio(i));
+				}
+				pausarEjecucion();
+			}
+			
+		}while(opc != 0);
 	}
 	
-	public static int seleccionarDificultad() {
+	public static Partida actualizarCambios(Partida partida){	//a terminar
+		partida.actualizarHistorialPatrimonio(partida.getEmpresa().getPatrimonio());
+		
+		return partida;
+	}
+	
+	public static int seleccionarDificultad() { //seleccion de dificultad del juego
 		int dif = 0;
 		System.out.println(" > Seleccione donde se encontrara la empresa: ");
 		System.out.println(" 	 ----- Facil -----");
@@ -270,17 +303,69 @@ public class Main {
 		return dif;
 	}
 	
-	public static Partida nuevaPartida()
+	public static Partida nuevaPartida() //creación de una partida desde cero
 	{
 		
 		System.out.println("¡Bienvenido al menú de nueva partida!");
+		
+		int i = 0;
+		ArrayList<String> pDisponibles = new ArrayList<String>();
+		pDisponibles = new Util().partidasDisponibles();
+		boolean flag = false;
+		boolean existe = false;
+		String nombre = new String();
+		String aux = new String();
+		
+		while(!flag)
+		{
+			System.out.println("Nombre de la empresa: ");
+			scan.nextLine();
+			nombre = scan.nextLine();
+			aux = nombre.replaceAll("\\s", "");
+			
+			while(i<pDisponibles.size() && !existe)
+			{
+				if(pDisponibles.get(i).equals(aux))
+				{
+					
+					existe = true;
+				}
+				if(!existe)
+				{
+					i++;
+				}
+				
+			}
+			
+			if(existe)
+			{
+				System.out.println("\nYa existe una partida guardada con ese nombre de empresa.\n");
+				System.out.println("Si desea sobreescribir esa partida ingrese 1.\n");
+				System.out.println("En caso contrario presione 0 y modifique el nombre de la empresa.\n\n");
+				int opc = seleccionaOpcion();
+				switch(opc)
+				{
+				case 1:
+					flag = true;
+					break;
+				case 0:
+					flag = false;
+					existe = false;
+				}
+			}
+			else
+			{
+				flag = true;
+			}
+		}
+		
+		
 		System.out.println("Nombre del CEO (usuario): ");
 		String ceo = scan.nextLine();
-		scan.nextLine(); // clean buffer.
-		System.out.println("Nombre de la empresa: ");
-		String nombre = scan.nextLine();
+		
 		System.out.println("Seleccione una dificultad: ");
 		int dificultad = seleccionarDificultad();
+		
 		
 		ArrayList<EmpresaEnemiga> competencia = generarCompetencia(dificultad);
 
@@ -329,10 +414,10 @@ public class Main {
 		System.out.println("  El objetivo del juego es muy simple, aumenta tus ganancias, sobrevive a los eventos, y por supuesto...");
 		System.out.println("                                ¡APLASTA A TU COMPETENCIA!");
 		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!-\n\n");
-		String sTexto = new String();
+		
 		try
 	    {
-			sTexto = br.readLine();
+			String sTexto = br.readLine();
 	    }
 	    catch(Exception e)
 	    {}
