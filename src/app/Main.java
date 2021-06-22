@@ -119,13 +119,13 @@ public class Main {
 	public static void loopJuego(Partida partida) //loop general del juego
 	{
 		int opc = 3;
-		int ganancia = 0;
+		double ganancia = 0;
 		do
 		{
-			partida.actualizarMes();
 			
 			if(opc == 3) {
 				ganancia =  ganancia + novedadesEventos(partida);
+				partida.actualizacionInicioMes(ganancia); //(agregar mas funciones) Actualiza el patrimonio, aumenta en 1 el mes
 			}
 			
 			opc = menuJuego();
@@ -150,9 +150,11 @@ public class Main {
 					opc = -1;
 					System.out.println("Ingrese una opcion valida!");
 					break;
-					
-				//partida = actualizarCambios(partida);
 			}		
+			
+			if(opc == 3) {
+				partida.actualizacionFinDeMes(); //(agregar mas funciones) Actualiza el historial de patrimonios
+			}
 			
 			if(opc != 0 && opc != -1) {
 				pausarEjecucion();
@@ -177,9 +179,9 @@ public class Main {
 		return opc;
 	}
 	
-	public static int novedadesEventos(Partida partida)
+	public static double novedadesEventos(Partida partida)
 	{
-		int ganancia = 0;
+		double ganancia = 0;
 		
 		for (int i=0; i < 5; i++)
 		{
@@ -287,12 +289,6 @@ public class Main {
 			}
 			
 		}while(opc != 0);
-	}
-	
-	public static Partida actualizarCambios(Partida partida){	//a terminar
-		partida.actualizarHistorialPatrimonio(partida.getEmpresa().getPatrimonio());
-		
-		return partida;
 	}
 	
 	public static int seleccionarDificultad() { //seleccion de dificultad del juego

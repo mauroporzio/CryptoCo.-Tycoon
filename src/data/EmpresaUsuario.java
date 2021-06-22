@@ -69,9 +69,14 @@ public class EmpresaUsuario extends Empresa
 		return this.historialPatrimonio;
 	}
 	
+	public void setHistorialPatrimonio(int mes, Double value) {
+		this.historialPatrimonio.put(mes, value);
+	}
+	
 	public Double mesEspecificoPatrimonio(int n){
 		return historialPatrimonio.get(n);
 	}
+	
 	
 	
 	

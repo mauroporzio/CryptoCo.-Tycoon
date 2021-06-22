@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//import jdk.internal.org.jline.reader.impl.history.DefaultHistory;
+
 public class Partida implements IProbabilidad, Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -80,14 +82,15 @@ public class Partida implements IProbabilidad, Serializable
 		return this.eventos;
 	}
 
-	public void actualizarHistorialPatrimonio(Double valor){
-		this.empresa.getHistorialPatrimonio().put(getMes(), valor);
-	}
-	
-	public void actualizarMes(){
+	public void actualizacionInicioMes(double ganancia) {
+		this.empresa.setPatrimonio(ganancia);
 		this.mes++;
 	}
-
+	
+	public void actualizacionFinDeMes(){	//a terminar
+		this.empresa.setHistorialPatrimonio(getMes(), this.empresa.getPatrimonio());
+	}
+	
 	@Override
 	public int calcularProbabilidad() {
 		// TODO Auto-generated method stub
