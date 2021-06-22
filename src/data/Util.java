@@ -1,13 +1,13 @@
 package data;
 
 import java.io.EOFException;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class Util 
@@ -92,11 +92,13 @@ public class Util
 				
 				if (partidasDisp.isEmpty() || !partidasDisp.get(i).equals(partida.getEmpresa().getNombre())) // si no se encuentra la partida
 				{
-					FileOutputStream fosDisp = new FileOutputStream(nomArchiPartidasDisp, true);
+					FileOutputStream fosDisp = new FileOutputStream(nomArchiPartidasDisp);
+					
+					partidasDisp.add(partida.getEmpresa().getNombre());
 					
 					try (ObjectOutputStream oosDisp = new ObjectOutputStream(fosDisp)) // la agrego a al archivo que guarda las partidas disp.
 					{
-						oosDisp.writeObject(partida.getEmpresa().getNombre());
+						oosDisp.writeObject(partidasDisp);
 					}
 					catch (IOException e) 
 					{
@@ -119,43 +121,27 @@ public class Util
 		return guardado;
 	}
 
+	@SuppressWarnings("unchecked") // por un casteo pero esta todo checkeado en las otras funciones.
 	public ArrayList<String> partidasDisponibles() // devuelve un array list con los nombres de las partidas que estan disponibles para cargar.
 	{
 		ArrayList<String> partidas =  new ArrayList<String>();
-		boolean encontrado = true;
-
-		try 
+		
+		try (FileInputStream fis = new FileInputStream(nomArchiPartidasDisp))
 		{
-			FileInputStream fis = new FileInputStream(nomArchiPartidasDisp);
-			
-			// no se cierran los fis y ois porque sino no funciona con el while; SE DEBE CERRAR AL TERMINAR EL PROGRAMA.
-			
-			while (encontrado)
+			try (ObjectInputStream ois = new ObjectInputStream(fis))
 			{
-				try
-				{
-					ObjectInputStream ois = new ObjectInputStream(fis);
-					partidas.add((String) ois.readObject());
-					
-				}
-				catch (EOFException e)
-				{
-					encontrado = false;
-				}
-				catch (IOException e)
-				{
-					System.out.println("IOEXCEPTION:" + e.getMessage());
-				}
-				catch (ClassNotFoundException e)
-				{
-					System.out.println("CLASSNOTFOUND:" + e.getMessage());
-				}
+				partidas = (ArrayList<String>) ois.readObject();
 			}
-		} 
-		catch (FileNotFoundException e1) 
-		{
-			//System.out.println("No se encontro el archivo " + nomArchiPartidasDisp);
 		}
+		catch (FileNotFoundException e)
+		{
+			
+		}
+		catch (Exception e) 
+		{
+			System.out.println(e.getMessage());
+		}
+		
 		
 		return partidas;
 	}
@@ -229,5 +215,53 @@ public class Util
 		return partida;
 	}
 	
+	public boolean borrarPartida(String nombreEmpresa) // devuelve true si borro la partida con el nombre empresa dado, sino false.
+	{
+		boolean borrado = false;
+		int i=0;
+		
+		ArrayList<String> partidasDisp = partidasDisponibles();	
+		
+		while (i < partidasDisp.size() && !partidasDisp.get(i).equals(nombreEmpresa))
+		{
+			i++;
+		}
+		
+		if (partidasDisp.get(i).equals(nombreEmpresa))
+		{
+			File file = new File(getCurrentWorkingDirectory() + "\\" + nombreEmpresa + ".dat");
+			
+			if (file.delete())
+			{
+				partidasDisp.remove(i);
+				
+				try (FileOutputStream fosDisp = new FileOutputStream(nomArchiPartidasDisp))
+				{
+					try (ObjectOutputStream oosDisp = new ObjectOutputStream(fosDisp)) // la agrego a al archivo que guarda las partidas disp.
+					{
+						oosDisp.writeObject(partidasDisp);
+					}
+					catch (IOException e) 
+					{
+						e.printStackTrace();
+					}
+				} 
+				catch (FileNotFoundException e1) 
+				{
+					System.out.println("ERROR: No se encontro el archivo: " + nomArchiPartidasDisp);
+				} 
+				catch (IOException e2) 
+				{
+					System.out.println(e2.getLocalizedMessage());
+				}
+			}
+		}
+		return borrado;
+	}
 	
+	private static String getCurrentWorkingDirectory() 
+	 {
+		 String userDirectory = System.getProperty("user.dir");
+	     return userDirectory;
+	 }
 }

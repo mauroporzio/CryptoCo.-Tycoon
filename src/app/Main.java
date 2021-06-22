@@ -30,6 +30,18 @@ public class Main {
 					partida = menuCargarPartida();
 					break;
 				case 3:
+					if (menuBorrarPartida())
+					{
+						partida = nuevaPartida();	//Se configura la empresa y la dificultad del juego. Retorna la partida actual
+						new Util().guardarPartida(partida); //guarda la partida recién creada
+						explicacionJuego(partida.getEmpresa().getCEO()); //muestra una explicacion básica del funcionamiento del juego
+					}
+					else
+					{
+						partida = null;
+					}
+					break;
+				case 4:
 					//verMejoresPartidas();	
 					break;
 				
@@ -38,7 +50,7 @@ public class Main {
 					break;
 			}
 			
-			if (partida != null)
+			if (partida != null && opc != 0)
 			{
 				loopJuego(partida);
 			}
@@ -50,7 +62,8 @@ public class Main {
 		System.out.println("------- CryptoCo. Tycoon -------\n");
 		System.out.println("1-> Nueva partida");
 		System.out.println("2-> Cargar partida");
-		System.out.println("3-> Ver mejores partidas");
+		System.out.println("3-> Borrar partida");
+		System.out.println("4-> Ver mejores partidas");
 		System.out.println("0-> Salir");
 		
 		int opc = seleccionaOpcion();
@@ -114,6 +127,80 @@ public class Main {
 		}
 		
 		return partida;
+	}
+	
+	public static boolean menuBorrarPartida()
+	{
+		int opc = -1;
+		int opc2 = 0;
+		boolean crearNuevaPartida = false;
+		ArrayList<String> arrayNomPartidas = new Util().partidasDisponibles();
+		
+		if (arrayNomPartidas.size() > 0)
+		{
+			while (opc < 0 || opc > arrayNomPartidas.size())
+			{
+				System.out.println("<<< Borrar Partida >>>");
+				int i=0;
+				
+				for (String nombreE : arrayNomPartidas)
+				{
+					System.out.println(" - Ingrese (" + i + ") para Borrar: " + nombreE);
+					i++;
+				}
+				System.out.println(" - Ingrese (" + arrayNomPartidas.size() + ") para cancelar");
+				
+				opc = seleccionaOpcion();
+			}
+			
+			if (opc != arrayNomPartidas.size())
+			{
+				int opc3 = 0;
+				
+				while (opc3 != 1 && opc3 != 2)
+				{
+					System.out.println("Esta seguro que desea borrar la partida que contiene ["+ arrayNomPartidas.get(opc) +"]");
+					System.out.println(" - Presione 1 para borra la partida");
+					System.out.println(" - Presione 2 para cancelar");
+					
+					opc3 = seleccionaOpcion();
+				}
+				 
+				
+				if (opc3 == 1)
+				{
+					if (new Util().borrarPartida(arrayNomPartidas.get(opc)))
+					{
+						System.out.println("Se borro exitosamente la partida!");
+					}
+					else
+					{
+						System.out.println("El borrado de la partida fallo");
+					}
+				}
+			}
+		}
+		else
+		{	
+			while(opc2 != 1 && opc2 != 2)
+			{
+				System.out.println("No hay partidas para borrar");
+				System.out.println("Desea crear una partida nueva?");
+				
+				System.out.println(" - 1 para SI");
+				System.out.println(" - 2 para NO");
+				
+				opc2 = seleccionaOpcion();
+				
+			}
+			
+			if (opc2 == 1)
+			{
+				crearNuevaPartida = true;
+			}
+		}
+		
+		return crearNuevaPartida;
 	}
 	
 	public static void loopJuego(Partida partida) //loop general del juego
