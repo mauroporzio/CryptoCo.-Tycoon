@@ -1,6 +1,7 @@
 package app;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 
@@ -281,13 +282,13 @@ public class Main {
 	public static double novedadesEventos(Partida partida)
 	{
 		double ganancia = 0;
-		int opc = 0, rand = 0;
+		int opc = 0;
 		
 		for (int i=1; i < 5; i++)
 		{
-			rand = (int)Math.floor(Math.random()*(partida.getArrayEventos().size()-0+1)+0); //Selecciono un numero randon entre 0 y la cantidad de eventos
+			Random rand = new Random();//Selecciono un numero randon entre 0 y la cantidad de eventos
 			
-			Evento evento = partida.getArrayEventos().get(rand);
+			Evento evento = partida.getArrayEventos().get(rand.nextInt(partida.getArrayEventos().size()-1));
 			opc = printEvento(evento);
 			
 			if (evento instanceof EventoConOpciones)
