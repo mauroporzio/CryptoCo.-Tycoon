@@ -298,6 +298,7 @@ public class Main {
 		
 		if (new Util().guardarPartida(partida))
 		{
+			new Util().setTop10Empresas(partida.getEmpresa());
 			System.out.println("Se guardo correctamente la partida!");
 		}
 	}
