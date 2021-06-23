@@ -90,7 +90,21 @@ public class EmpresaUsuario extends Empresa
 		return eventosActivos.size();
 	}
 	
-	
+	public void aumentarClientes(Partida partida)
+	{
+		if(partida.getDificultad() == 1)
+		{
+			this.nClientes = this.nClientes + (int)(this.nClientes * 0.20);
+		}
+		else if(partida.getDificultad() == 2)
+		{
+			this.nClientes = this.nClientes + (int)(this.nClientes * 0.15);
+		}
+		else if(partida.getDificultad() == 3)
+		{
+			this.nClientes = this.nClientes + (int)(this.nClientes * 0.10);
+		}
+	}
 	
 	
 	
