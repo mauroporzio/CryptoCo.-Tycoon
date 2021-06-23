@@ -6,6 +6,5 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Matteo/Desktop/Facultad/3er cuatri/Prog3 - Lab3/Proyectos Java Eclipse/event-loader/src/data/json-20210307.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
