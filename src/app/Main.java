@@ -226,11 +226,11 @@ public class Main {
 					break;
 				
 				case 2:
-					//verEventos();
+					verEventos(partida);
 					break;
 					
 				case 3:
-					//partida.avanzarMes();
+					partida.actualizacionFinDeMes(); //(agregar mas funciones) Actualiza el historial de patrimonios
 					break;
 				
 				default:
@@ -238,10 +238,6 @@ public class Main {
 					System.out.println("Ingrese una opcion valida!");
 					break;
 			}		
-			
-			if(opc == 3) {
-				partida.actualizacionFinDeMes(); //(agregar mas funciones) Actualiza el historial de patrimonios
-			}
 			
 			if(opc != 0 && opc != -1) {
 				pausarEjecucion();
@@ -258,7 +254,7 @@ public class Main {
 	public static int menuJuego(){
 		System.out.println("\nMenu:");
 		System.out.println("1-> Finanzas."); 
-		System.out.println("2-> Ver eventos activos y sus modificadores.");
+		System.out.println("2-> Ver eventos activos.");
 		System.out.println("3-> Avanzar mes.");
 		System.out.println("0-> Guardar y salir.");
 		int opc = seleccionaOpcion();
@@ -329,6 +325,14 @@ public class Main {
 			System.out.println(eventoAMostrar.getDescripcion() + "\n");
 		}
 		return opc;
+	}
+	
+	public static void verEventos(Partida partida) {
+		System.out.println("\n! ! !  Eventos Activos ! ! ! \n");
+		for(int i = 0; i < partida.getEmpresa().contarEventosActivos(); i++) {
+			Evento evento = partida.getEmpresa().getEventoActivo(i); 
+			printEvento(evento);
+		}	
 	}
 	
 	public static void menuFinanzas(EmpresaUsuario empresa){

@@ -82,8 +82,13 @@ public class EmpresaUsuario extends Empresa
 		this.eventosActivos.add(evento);
 	}
 	
+	public Evento getEventoActivo(int pos){
+		return eventosActivos.get(pos);
+	}
 	
-	
+	public int contarEventosActivos() {
+		return eventosActivos.size();
+	}
 	
 	
 	
