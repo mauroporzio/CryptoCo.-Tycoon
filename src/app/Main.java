@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import data.*;
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
@@ -89,6 +90,7 @@ public class Main {
 	}
 	
 	public static int seleccionaOpcion(){
+		scan = new Scanner(System.in);
 		System.out.println("Por favor, ingrese un número dentro de las opciones y presione ENTER.");
 		int opc = scan.nextInt();
 		return opc;
@@ -481,7 +483,7 @@ public class Main {
 			}
 		}
 		
-		
+		scan = new Scanner(System.in);
 		System.out.println("Nombre del CEO (usuario): ");
 		String ceo = scan.nextLine();
 		
@@ -498,8 +500,15 @@ public class Main {
 	}
 	
 	public static void pausarEjecucion() {
-		System.out.println("Seleccione cualquier tecla y presione ENTER");
-		scan.next();
+		System.out.println("Presione ENTER para continuar.");
+
+		try 
+		{
+			br.readLine();
+		}catch(IOException e)
+		{
+			
+		}
 	}
 	
 	public static void explicacionJuego(String nombre)

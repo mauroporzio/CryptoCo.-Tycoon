@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public class EmpresaUsuario extends Empresa
 {
-	static final int patInicFac = 200000;  //--
-	static final int patInicMed = 100000;  //conjunto de constantes que se utilizan para, según la dificultad, establecer un patrimonio inicial de la empresa.
-	static final int patInicDif = 50000;   //--
+	static final double patInicFac = 200000;  //--
+	static final double patInicMed = 100000;  //conjunto de constantes que se utilizan para, según la dificultad, establecer un patrimonio inicial de la empresa.
+	static final double patInicDif = 50000;   //--
 	static final int clientesInicFac = 500;  //--
 	static final int clientesInicMed = 200;  //conjunto de constantes que se utilizan para, segun la dificultad, establecer la cantidad de clientes con la que comienza la empresa.
 	static final int clientesInicDif = 100;  //--
