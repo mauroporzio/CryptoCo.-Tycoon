@@ -8,11 +8,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+
 import java.util.ArrayList;
 
-public class Util 
+
+import org.json.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
+public class Util
 {
 	public static final String nomArchiPartidasDisp = "partidasDisponibles.dat"; // nombre donde se guardan todas las partidas disponibles para cargar.
+	public static final String nombreArchiEmpresasEn = "EmpresasEnemigas.json";
 	
 	public Util(){}
 	
@@ -264,4 +271,53 @@ public class Util
 		 String userDirectory = System.getProperty("user.dir");
 	     return userDirectory;
 	 }
+	
+	public static ArrayList<EmpresaEnemiga> cargarYOrdenarEmpresasEnemigas(int dificultad)
+	{
+		ArrayList<EmpresaEnemiga> empresas = new ArrayList<EmpresaEnemiga>();
+		
+		String contenido = "";
+
+		try 
+		{
+			
+			contenido = new String(Files.readAllBytes(Paths.get(nombreArchiEmpresasEn)));
+		} 
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		JSONArray jsondata = new JSONArray(contenido);
+		
+		for(int i=0;i<10;i++)
+		{
+			JSONObject dato = new JSONObject();
+			
+			dato = jsondata.getJSONObject(i);
+			
+			
+			EmpresaEnemiga empresa = new EmpresaEnemiga(dificultad, dato.getString("Nombre de la empresa"), dato.getString("CEO"));
+			
+			empresas.add(empresa);
+		}
+		
+		
+		empresas = ordenarEmpresas(empresas);
+		
+		
+		
+		return empresas;
+	}
+	
+	private static ArrayList<EmpresaEnemiga> ordenarEmpresas(ArrayList<EmpresaEnemiga> empresas) //me volvi idiota para intentar ordenarlo, me rindo por hoy. 4.00am
+	{
+	
+		return empresas;
+	}
+
 }
+
+	
+	
+	

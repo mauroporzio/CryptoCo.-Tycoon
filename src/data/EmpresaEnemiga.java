@@ -6,7 +6,7 @@ import java.util.Random;
 public class EmpresaEnemiga extends Empresa implements IProbabilidad
 {
 	private static Random rand = new Random();
-	
+
 	@Override
 	public int calcularProbabilidad() {
 		// TODO Auto-generated method stub
@@ -16,31 +16,23 @@ public class EmpresaEnemiga extends Empresa implements IProbabilidad
 	{
 		setNombre(nombre);
 		setCEO(ceo);
-		
+
 		if(dificultad == 1)
 		{
-			setPatrimonio(10000 + rand.nextDouble());
+			setPatrimonio(10000 + rand.nextInt(30000));
 		}
 		else if (dificultad == 2)
 		{
-			setPatrimonio(50000 + rand.nextDouble());
+			setPatrimonio(50000 + rand.nextInt());
 		}
 		else
 		{
-			setPatrimonio(100000 + rand.nextDouble());
+			setPatrimonio(100000 + rand.nextInt());
 		}
+		
+		
 	}
 	
-	
-	
-	
-	
-	/*public EmpresaEnemiga cargarEmpresas()
-	{
-		
-		
-		
-	}*/
 	
 	
 	

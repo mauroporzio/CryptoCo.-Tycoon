@@ -2,6 +2,8 @@ package app;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+
+
 import data.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -10,7 +12,21 @@ public class Main {
 		
 	static Scanner scan = new Scanner(System.in);
 	static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	public static void main(String[] args) {
+	
+	public static void main(String[] args) 
+	{
+	
+		/*ArrayList<EmpresaEnemiga> competencia = Util.cargarYOrdenarEmpresasEnemigas(1);
+		
+		int i = 0;
+		
+		for(i=0; i<competencia.size();i++)
+		{
+			System.out.println("Nombre: " + competencia.get(i).getNombre());
+			System.out.println("CEO: " + competencia.get(i).getCEO());
+			System.out.println("Patrimonio: " + competencia.get(i).getPatrimonio());
+		}
+		*/
 		
 		int opc = 0;
 		Partida partida = null;
@@ -472,30 +488,12 @@ public class Main {
 		int dificultad = seleccionarDificultad();
 		
 		
-		ArrayList<EmpresaEnemiga> competencia = generarCompetencia(dificultad);
+		ArrayList<EmpresaEnemiga> competencia = (ArrayList<EmpresaEnemiga>)Util.cargarYOrdenarEmpresasEnemigas(dificultad);
 
 		EmpresaUsuario empresa = new EmpresaUsuario(dificultad, nombre, ceo);
 		Partida partida = new Partida(empresa, competencia, dificultad);
 		
 		return partida;
-	}
-	
-	public static ArrayList<EmpresaEnemiga> generarCompetencia(int dificultad) //TEMPORAL
-	{
-		ArrayList<EmpresaEnemiga> competencia = new ArrayList<EmpresaEnemiga>();
-		int i = 0;
-		int max = 10;
-		
-		for(i=0;i<max;i++)
-		{
-			String aux = new String();
-			aux = "empresa n°" +i;
-			EmpresaEnemiga empresa = new EmpresaEnemiga(i,aux,aux);
-			
-			competencia.add(empresa);
-		}
-		
-		return competencia;
 	}
 	
 	public static void pausarEjecucion() {
@@ -520,12 +518,7 @@ public class Main {
 		System.out.println("                                ¡APLASTA A TU COMPETENCIA!");
 		System.out.print("\nAhora sí, comencemos. Presiona la tecla Enter para continuar!-\n\n");
 		
-		try
-	    {
-			String sTexto = br.readLine();
-	    }
-	    catch(Exception e)
-	    {}
+		pausarEjecucion();
 	}
 
 }
