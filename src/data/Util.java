@@ -263,6 +263,10 @@ public class Util
 				{
 					System.out.println(e2.getLocalizedMessage());
 				}
+				finally
+				{
+					borrado = true;
+				}
 			}
 		}
 		return borrado;
