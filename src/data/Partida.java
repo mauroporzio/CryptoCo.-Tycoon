@@ -88,6 +88,7 @@ public class Partida implements IProbabilidad, Serializable
 	}
 	
 	public void actualizacionFinDeMes(){	//a terminar
+		this.empresa.aumentarClientes(dificultad);
 		this.empresa.setHistorialPatrimonio(getMes(), this.empresa.getPatrimonio());
 	}
 	
