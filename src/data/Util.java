@@ -10,7 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
 
 import org.json.*;
 import java.nio.file.Files;
@@ -20,6 +21,7 @@ public class Util
 {
 	public static final String nomArchiPartidasDisp = "partidasDisponibles.dat"; // nombre donde se guardan todas las partidas disponibles para cargar.
 	public static final String nombreArchiEmpresasEn = "EmpresasEnemigas.json";
+	public static final String nomArchiTop10Empresas = "top10Empresas.dat"; // nombre donde se almacena el top 10 historico de empresas.
 	
 	public Util(){}
 	
@@ -315,7 +317,86 @@ public class Util
 	
 		return empresas;
 	}
+	
+	public void setTop10Empresas(Empresa empresa)
+	{
+		ArrayList<Empresa> top10 = getTop10Empresas();
+		Comparator<Empresa> comparatorTop10 = new ComparatorTop10();
+		
+		if (top10.size() < 10)
+		{
+			top10.add(empresa);
+		}
+		else
+		{
+			int p=0;
+			
+			for (int i=0; i < top10.size(); i++)
+			{
+				if (empresa.getPatrimonio() <= top10.get(i).getPatrimonio())
+				{
+					p = i;
+				}	
+			}
+				
+			if (empresa.getPatrimonio() >= top10.get(p).getPatrimonio())
+			{
+				top10.set(p, empresa);
+			}
+		}
+		
+		Collections.sort(top10, comparatorTop10);
+		
+		try (FileOutputStream fos = new FileOutputStream(nomArchiTop10Empresas))
+		{
+			try (ObjectOutputStream oos = new ObjectOutputStream(fos))
+			{
+				oos.flush();
+				oos.writeObject(top10);
+			}
+			catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		} 
+		catch (FileNotFoundException e)
+		{
+			
+		} catch (Exception e) 
+		{
+			e.printStackTrace();
+		}
+	}
 
+	@SuppressWarnings("unchecked")
+	public ArrayList<Empresa> getTop10Empresas()
+	{
+		ArrayList<Empresa> top10 = new ArrayList<Empresa>();
+		
+		try (FileInputStream fis = new FileInputStream(nomArchiTop10Empresas))
+		{
+			try (ObjectInputStream ois = new ObjectInputStream(fis))
+			{
+				top10 = (ArrayList<Empresa>) ois.readObject();
+			}
+		}
+		catch (FileNotFoundException e)
+		{
+			
+		}
+		catch(EOFException e)
+		{
+			
+		}
+		catch (Exception e) 
+		{
+			//System.out.println(e.getMessage());
+			
+			e.printStackTrace();
+		}
+		
+		return top10;
+	}
 }
 
 	

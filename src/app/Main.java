@@ -60,7 +60,7 @@ public class Main {
 					}
 					break;
 				case 4:
-					//verMejoresPartidas();	
+					verMejoresPartidas();	
 					break;
 				
 				default:	//0 o default = salir
@@ -87,6 +87,38 @@ public class Main {
 		int opc = seleccionaOpcion();
 		
 		return opc;
+	}
+	
+	public static void verMejoresPartidas()
+	{
+		ArrayList<Empresa> top10 = new Util().getTop10Empresas();
+		int opc=0;
+		
+		System.out.println("<<< Mejores Partidas >>>");
+		
+		if (!top10.isEmpty())
+		{
+			for (int i=top10.size()-1; i > -1 ; i--)
+			{
+				System.out.println("-----------------------------------------");
+				System.out.println("Empresa: " + top10.get(i).getNombre());
+				System.out.println("CEO: " + top10.get(i).getCEO());
+				System.out.println("Patrimonio: " + top10.get(i).getPatrimonio());
+				System.out.println("-----------------------------------------");
+			}
+			
+		}
+		else
+		{
+			System.out.println("Aun no hay partidas cargadas en este apartado\n");
+		}
+		
+		do 
+		{
+			System.out.println("Presione 1 para Salir");
+			opc = seleccionaOpcion();
+		}
+		while (opc != 1);
 	}
 	
 	public static int seleccionaOpcion(){
