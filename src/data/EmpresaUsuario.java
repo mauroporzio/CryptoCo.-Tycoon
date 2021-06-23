@@ -60,10 +60,24 @@ public class EmpresaUsuario extends Empresa
 	{
 		this.nClientes = nClientes;
 	}
+	public int getNClientes()
+	{
+		return this.nClientes;
+	}
 	
 	public void setComision(double comision)
 	{
 		this.comision = comision;
+	}
+	
+	public double getComision()
+	{
+		return this.comision;
+	}
+	
+	public double calcularGananciaClientes()
+	{
+		return getComision()*getNClientes();
 	}
 	
 	public HashMap<Integer, Double> getHistorialPatrimonio(){
