@@ -8,14 +8,14 @@ public class Evento implements IProbabilidad, Serializable
 	private String nombre;
 	private String descripcion;
 	private boolean eventoActivo; //(true: activo; false: inactivo) al existir eventos que pueden mantenerse activos por cierto tiempo, no pueden aparecer nuevamente mientras estén activos.
-	
-	
+	private double valor = 0;
 	
 	public Evento(String nombre, String descripcion, boolean activo)
 	{
 		this.nombre = nombre;
 		this.descripcion = descripcion;
 		this.eventoActivo=activo;
+		setValor(valor);
 	}
 	
 	
@@ -27,14 +27,22 @@ public class Evento implements IProbabilidad, Serializable
 		return this.nombre;
 	}
 	
+	public void setValor(double valor)
+	{
+		this.valor = valor;
+	}
+	
 	public String getDescripcion()
 	{
 		return this.descripcion;
 	}
 	
-	
 	public boolean getActivo()
 	{
 		return this.eventoActivo;
+	}
+	
+	public void setEventoActivo() {
+		this.eventoActivo = true;
 	}
 }

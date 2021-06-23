@@ -269,17 +269,18 @@ public class Main {
 	public static double novedadesEventos(Partida partida)
 	{
 		double ganancia = 0;
+		int opc = 0, rand = 0;
 		
-		for (int i=0; i < 5; i++)
+		for (int i=1; i < 5; i++)
 		{
-			Evento evento = partida.getArrayEventos().get(i);
-			printEvento(evento);
+			rand = (int)Math.floor(Math.random()*(partida.getArrayEventos().size()-0+1)+0); //Selecciono un numero randon entre 0 y la cantidad de eventos
+			
+			Evento evento = partida.getArrayEventos().get(rand);
+			opc = printEvento(evento);
 			
 			if (evento instanceof EventoConOpciones)
 			{
 				EventoConOpciones eventoConOpc = (EventoConOpciones) evento;
-				
-				int opc = -1;
 				
 				do
 				{
@@ -290,6 +291,7 @@ public class Main {
 					else
 					{
 						System.out.println("Ingrese una opcion valida!");
+						opc = seleccionaOpcion();
 					}
 				}
 				while (opc < 0 || opc > eventoConOpc.getArrayOpciones().size());
@@ -298,8 +300,9 @@ public class Main {
 		return ganancia;
 	}
 	
-	public static void printEvento(Evento eventoAMostrar) //se utiliza para mostrar los eventos 
+	public static int printEvento(Evento eventoAMostrar) //se utiliza para mostrar los eventos 
 	{
+		int opc = 0;
 		if (eventoAMostrar instanceof EventoConOpciones)
 		{
 			EventoConOpciones evento = (EventoConOpciones) eventoAMostrar;
@@ -317,6 +320,7 @@ public class Main {
 			}
 			
 			System.out.println("Elija una opcion \n");
+			opc = seleccionaOpcion();
 		}
 		else
 		{
@@ -324,6 +328,7 @@ public class Main {
 			System.out.println(eventoAMostrar.getNombre() + "\n");
 			System.out.println(eventoAMostrar.getDescripcion() + "\n");
 		}
+		return opc;
 	}
 	
 	public static void menuFinanzas(EmpresaUsuario empresa){

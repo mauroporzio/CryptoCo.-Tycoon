@@ -17,16 +17,17 @@ public class EmpresaUsuario extends Empresa
 	
 	
 	
-	private ArrayList<Evento> histEventos; //se utiliza para almacenar un historial de los eventos por los que pasó la empresa a lo largo del juego.
-	private ArrayList<Modificador> modificadores; //Se utiliza para almacenar los modificadores y los eventos activos que posee la empresa.
+	private ArrayList<Evento> eventosActivos; //Se almacenan los eventos del mes anterior para evitar que aparezcan dos veces seguidas, y los eventos que se encuentran activos modificando los ingresos.
+	//private ArrayList<Modificador> modificadores; //Se utiliza para almacenar los modificadores y los eventos activos que posee la empresa.
 	private int nClientes; //Variable donde se almacena el numero de clientes que posee la empresa.
 	private double comision; //Comision que cobra la empresa a cada cliente por cada transaccion. Fuente principal de ingresos.
 	HashMap<Integer, Double> historialPatrimonio; //Key = mes ; Value= patrimonio en dicho mes. Se utiliza para almacenar el patrimonio que tuvo la empresa en cada mes. Se muestra al final del juego.
 	
+	
 	public EmpresaUsuario(int dificultad, String nombre, String CEO)
 	{
-		histEventos = new ArrayList<Evento>();
-		modificadores = new ArrayList<Modificador>();
+		eventosActivos = new ArrayList<Evento>();
+		//modificadores = new ArrayList<Modificador>();
 		historialPatrimonio = new HashMap<Integer, Double>();
 		setNombre(nombre);
 		setCEO(CEO);
@@ -77,6 +78,9 @@ public class EmpresaUsuario extends Empresa
 		return historialPatrimonio.get(n);
 	}
 	
+	public void agregarEventoActivo(Evento evento) {
+		this.eventosActivos.add(evento);
+	}
 	
 	
 	
