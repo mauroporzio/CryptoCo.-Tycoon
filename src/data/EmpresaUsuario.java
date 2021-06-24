@@ -1,10 +1,16 @@
 package data;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class EmpresaUsuario extends Empresa
 {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	static final double patInicFac = 10000;  //--
 	static final double patInicMed = 5000;  //conjunto de constantes que se utilizan para, según la dificultad, establecer un patrimonio inicial de la empresa.
 	static final double patInicDif = 2000;   //--
