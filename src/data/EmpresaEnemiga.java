@@ -1,17 +1,13 @@
 package data;
 
-import java.util.ArrayList;
+
 import java.util.Random;
 
-public class EmpresaEnemiga extends Empresa implements IProbabilidad
+public class EmpresaEnemiga extends Empresa
 {
 	private static Random rand = new Random();
 
-	@Override
-	public int calcularProbabilidad() {
-		// TODO Auto-generated method stub
-		return 0;
-	}	
+	
 	public EmpresaEnemiga(int dificultad, String nombre, String ceo)
 	{
 		setNombre(nombre);

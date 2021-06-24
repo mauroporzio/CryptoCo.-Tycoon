@@ -33,6 +33,18 @@ public abstract class Empresa implements Serializable
 	public void setPatrimonio(double patrimonio) {
 		this.patrimonio = patrimonio;
 	}
+
+	public boolean equals(Empresa empresa) {
+		boolean a = false;
+		if(empresa.nombre == this.nombre)
+		{
+			if(empresa.patrimonio == this.patrimonio)
+			{
+				a = true;
+			}
+		}
+		return a;
+	}
 	
 	
 }

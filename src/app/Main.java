@@ -18,18 +18,6 @@ public class Main {
 	public static void main(String[] args) 
 	{
 	
-		/*ArrayList<EmpresaEnemiga> competencia = Util.cargarYOrdenarEmpresasEnemigas(1);
-		
-		int i = 0;
-		
-		for(i=0; i<competencia.size();i++)
-		{
-			System.out.println("Nombre: " + competencia.get(i).getNombre());
-			System.out.println("CEO: " + competencia.get(i).getCEO());
-			System.out.println("Patrimonio: " + competencia.get(i).getPatrimonio());
-		}
-		*/
-		
 		int opc = 0;
 		Partida partida = null;
 		//------- variables -------
@@ -64,6 +52,7 @@ public class Main {
 					break;
 				
 				default:	//0 o default = salir
+					System.out.println("Juego terminado. Nos vemos gil!");
 					opc = 0;
 					break;
 			}
@@ -257,15 +246,11 @@ public class Main {
 	public static void loopJuego(Partida partida) //loop general del juego
 	{
 		int opc = 3;
-		double ganancia = 0;
 		do
 		{
-			
-			if(opc == 3) {
-				ganancia =  ganancia + novedadesEventos(partida);
-				partida.actualizacionInicioMes(ganancia); //(agregar mas funciones) Actualiza el patrimonio, aumenta en 1 el mes
-			}
-			
+			/*if(opc == 3){
+				partida = novedadesEventos(partida);
+			}*/
 			opc = menuJuego();
 			switch(opc)
 			{
@@ -281,7 +266,12 @@ public class Main {
 					break;
 					
 				case 3:
-					partida.actualizacionFinDeMes(); //(agregar mas funciones) Actualiza el historial de patrimonios
+					partida = novedadesEventos(partida);
+					partida.actualizacionFinDeMes(); //Actualiza el historial de patrimonios y aumenta la cantidad de clientes
+					if (new Util().guardarPartida(partida))
+					{
+						new Util().setTop10Empresas(partida.getEmpresa());
+					}
 					break;
 				
 				default:
@@ -314,7 +304,7 @@ public class Main {
 		return opc;
 	}
 	
-	public static double novedadesEventos(Partida partida)
+	public static Partida novedadesEventos(Partida partida)
 	{
 		double ganancia = 0;
 		int opc = 0;
@@ -322,8 +312,22 @@ public class Main {
 		for (int i=1; i < 5; i++)
 		{
 			Random rand = new Random();//Selecciono un numero randon entre 0 y la cantidad de eventos
+			int aux = rand.nextInt(partida.getArrayEventos().size());
+			Evento evento = partida.getArrayEventos().get(aux);
 			
-			Evento evento = partida.getArrayEventos().get(rand.nextInt(partida.getArrayEventos().size()-1));
+			ArrayList<Evento> activos = partida.getEmpresa().getArrayEventosActivos();
+			
+			while(activos.contains(evento))
+			{
+				aux = rand.nextInt();
+				evento = partida.getArrayEventos().get(aux);
+			}
+			
+			if(evento.getActivo())
+			{
+				partida.getEmpresa().agregarEventoActivo(evento);
+			}
+
 			opc = printEvento(evento);
 			
 			if (evento instanceof EventoConOpciones)
@@ -344,8 +348,44 @@ public class Main {
 				}
 				while (opc < 0 || opc > eventoConOpc.getArrayOpciones().size());
 			}
+			else
+			{
+				ganancia = ganancia + evento.getValor();
+			}
+	
 		}
-		return ganancia;
+		
+		double totalEventosActivos = resultadoEventosActivos(partida.getEmpresa());
+		
+		System.out.println("===============================");
+		System.out.println("Total eventos: $"+ganancia);
+		System.out.println("Total clientes: $"+partida.getEmpresa().calcularGananciaClientes());
+		System.out.println("Total eventos activos: $"+totalEventosActivos);
+		System.out.println("Clientes nuevos: "+partida.getEmpresa().calcularNuevosClientes(partida.getDificultad()));
+		double totalFinal = (totalEventosActivos) + (ganancia) + (partida.getEmpresa().calcularGananciaClientes());
+		System.out.println("===============================");
+		System.out.println("Clientes totales: "+partida.getEmpresa().getNClientes());
+		System.out.println("Resultado final: $" + totalFinal);
+		System.out.println("===============================");
+		
+		partida.actualizacionInicioMes(ganancia + (totalEventosActivos)); //Actualiza el patrimonio y aumenta en 1 el mes
+		
+		return partida;
+	}
+	
+	public static double resultadoEventosActivos(EmpresaUsuario empresa)
+	{
+		int i = 0;
+		double result = 0;
+		
+		for(i=0; i<empresa.getArrayEventosActivos().size();i++)
+		{
+			result += empresa.getArrayEventosActivos().get(i).getValor();
+		}
+		
+		
+		
+		return result;
 	}
 	
 	public static int printEvento(Evento eventoAMostrar) //se utiliza para mostrar los eventos 
@@ -358,7 +398,7 @@ public class Main {
 			System.out.println("<<<Evento>>>\n");
 			System.out.println(evento.getNombre() + "\n");
 			System.out.println(evento.getDescripcion() + "\n");
-			
+			System.out.println("Valor: $"+evento.getValor() + "\n");
 			System.out.println("Opciones: \n");
 			
 			ArrayList<String> arrayOpciones = evento.getArrayOpciones();
@@ -375,13 +415,15 @@ public class Main {
 			System.out.println("\n<<<Evento>>>\n");
 			System.out.println(eventoAMostrar.getNombre() + "\n");
 			System.out.println(eventoAMostrar.getDescripcion() + "\n");
+			System.out.println("Valor: $"+eventoAMostrar.getValor() + "\n");
 		}
 		return opc;
 	}
 	
 	public static void verEventos(Partida partida) {
 		System.out.println("\n! ! !  Eventos Activos ! ! ! \n");
-		for(int i = 0; i < partida.getEmpresa().contarEventosActivos(); i++) {
+		for(int i = 0; i < partida.getEmpresa().contarEventosActivos(); i++) 
+		{
 			Evento evento = partida.getEmpresa().getEventoActivo(i); 
 			printEvento(evento);
 		}	
@@ -409,21 +451,11 @@ public class Main {
 					case 1:
 						System.out.println(" > Finanzas mes " + n +"\n");
 						System.out.println(" > Patrimonio: $" + empresa.getPatrimonio());
-						
-						if(n > 0){	//Verifica que haya cargado algo en el historial
-							System.out.println(" > Patrimonio ultimos tres meses:"); //Recorre los ultimso 3 patrimonios que se encuentran en el historial
-							
-							for(int i = n-3; i < n+1; i++) {	//Posiciona i 3 meses antes y a n en el mes actual
-								if(i > 0) {		//Si los meses cargados en el historial son inferiores a 3, se muestran los cargados hasta la fecha (2,1 o 0)
-									System.out.println("  Mes <" + i + ">: $" + empresa.mesEspecificoPatrimonio(i));
-								}
-							}
-						}
 						break;
 						
 					case 2:	//Muestra el historial de patrimonios desde que se creo la empresa hasta la fecha actual
 						if(n > 0) {	//Verifica que haya algo que mostrar
-							for(int i = 1; i < empresa.getHistorialPatrimonio().size() + 1 ; i++){ 
+							for(int i = 1; i < empresa.getHistorialPatrimonio().size()+1 ; i++){ 
 								System.out.println("   Mes <" + i + ">: $" + empresa.mesEspecificoPatrimonio(i));
 							}
 						}else {

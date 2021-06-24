@@ -5,16 +5,18 @@ import java.util.HashMap;
 
 public class EmpresaUsuario extends Empresa
 {
-	static final double patInicFac = 200000;  //--
-	static final double patInicMed = 100000;  //conjunto de constantes que se utilizan para, según la dificultad, establecer un patrimonio inicial de la empresa.
-	static final double patInicDif = 50000;   //--
+	static final double patInicFac = 10000;  //--
+	static final double patInicMed = 5000;  //conjunto de constantes que se utilizan para, según la dificultad, establecer un patrimonio inicial de la empresa.
+	static final double patInicDif = 2000;   //--
 	static final int clientesInicFac = 500;  //--
 	static final int clientesInicMed = 200;  //conjunto de constantes que se utilizan para, segun la dificultad, establecer la cantidad de clientes con la que comienza la empresa.
 	static final int clientesInicDif = 100;  //--
 	static final double comInicialFac = 7;  //--
 	static final double comInicialMed = 5;  //monto que cobra la empresa por cada transaccion.
 	static final double comInicialDif = 3;  //--
-	
+	static final double aumentoClientesFac = 0.15;
+	static final double aumentoClientesMed = 0.10;
+	static final double aumentoClientesDif = 0.05;
 	
 	
 	private ArrayList<Evento> eventosActivos; //Se almacenan los eventos del mes anterior para evitar que aparezcan dos veces seguidas, y los eventos que se encuentran activos modificando los ingresos.
@@ -39,18 +41,21 @@ public class EmpresaUsuario extends Empresa
 				setPatrimonio(patInicFac);
 				setNClientes(clientesInicFac);
 				setComision(comInicialFac);
+				break;
 			}
 			case 2:  //Medio
 			{
 				setPatrimonio(patInicMed);
 				setNClientes(clientesInicMed);
 				setComision(comInicialMed);
+				break;
 			}
 			case 3:  //Dificil
 			{
 				setPatrimonio(patInicDif);
 				setNClientes(clientesInicDif);
 				setComision(comInicialDif);
+				break;
 			}
 		}
 		
@@ -60,6 +65,7 @@ public class EmpresaUsuario extends Empresa
 	{
 		this.nClientes = nClientes;
 	}
+	
 	public int getNClientes()
 	{
 		return this.nClientes;
@@ -108,19 +114,34 @@ public class EmpresaUsuario extends Empresa
 	{
 		if(dificultad == 1)
 		{
-			this.nClientes = this.nClientes + (int)(this.nClientes * 0.20);
+			this.nClientes = this.nClientes + (int)(this.nClientes * aumentoClientesFac);
 		}
 		else if(dificultad == 2)
 		{
-			this.nClientes = this.nClientes + (int)(this.nClientes * 0.15);
+			this.nClientes = this.nClientes + (int)(this.nClientes * aumentoClientesMed);
 		}
 		else if(dificultad == 3)
 		{
-			this.nClientes = this.nClientes + (int)(this.nClientes * 0.10);
+			this.nClientes = this.nClientes + (int)(this.nClientes * aumentoClientesDif);
 		}
 	}
 	
+	public ArrayList<Evento> getArrayEventosActivos()
+	{
+		return this.eventosActivos;
+	}
 	
-	
+	public int calcularNuevosClientes(int dificultad){
+		int aumento = 0;
+		switch(dificultad){
+			case 1:
+				aumento =  (int)(this.nClientes * aumentoClientesFac);
+			case 2:
+				aumento = (int)(this.nClientes * aumentoClientesMed);
+			case 3:
+				aumento = (int)(this.nClientes * aumentoClientesDif);
+		}
+		return aumento;
+	}
 	
 }

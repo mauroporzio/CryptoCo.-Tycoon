@@ -22,29 +22,26 @@ public class Util
 	public static final String nomArchiPartidasDisp = "partidasDisponibles.dat"; // nombre donde se guardan todas las partidas disponibles para cargar.
 	public static final String nombreArchiEmpresasEn = "EmpresasEnemigas.json";
 	public static final String nomArchiTop10Empresas = "top10Empresas.dat"; // nombre donde se almacena el top 10 historico de empresas.
-	
+	public static final String nomArchiEventos = "eventos.dat";
 	public Util(){}
 	
-	public ArrayList<Evento> leerEventos(String nombreArchivo) // devuelve un array list con todos los eventos cargados en el archivo.
+	@SuppressWarnings("unchecked")
+	public ArrayList<Evento> leerEventos() // devuelve un array list con todos los eventos cargados en el archivo.
 	{
 		ArrayList<Evento> arrayEventos = new ArrayList<Evento>();
 
 		try 
 		{
-			FileInputStream fis = new FileInputStream(nombreArchivo);
+			FileInputStream fis = new FileInputStream(nomArchiEventos);
 			
 			try
 			{
 				ObjectInputStream ois = new ObjectInputStream(fis);
-				Integer eventCount = ois.readInt();
+				arrayEventos = (ArrayList<Evento>) ois.readObject();
 				
 				ois.close();
 				fis.close();
-				
-				for (int i=0; i < eventCount; i++)
-				{
-					arrayEventos.add((Evento) ois.readObject());
-				}
+			
 			}
 			catch (EOFException e)
 			{
@@ -281,6 +278,7 @@ public class Util
 	public static ArrayList<EmpresaEnemiga> cargarYOrdenarEmpresasEnemigas(int dificultad)
 	{
 		ArrayList<EmpresaEnemiga> empresas = new ArrayList<EmpresaEnemiga>();
+		Comparator<Empresa> comparatorEmpresas = new ComparatorTop10();
 		
 		String contenido = "";
 
@@ -309,16 +307,10 @@ public class Util
 		}
 		
 		
-		empresas = ordenarEmpresas(empresas);
+		
+		Collections.sort(empresas, comparatorEmpresas);
 		
 		
-		
-		return empresas;
-	}
-	
-	private static ArrayList<EmpresaEnemiga> ordenarEmpresas(ArrayList<EmpresaEnemiga> empresas) //me volvi idiota para intentar ordenarlo, me rindo por hoy. 4.00am
-	{
-	
 		return empresas;
 	}
 	
@@ -327,7 +319,7 @@ public class Util
 		ArrayList<Empresa> top10 = getTop10Empresas();
 		Comparator<Empresa> comparatorTop10 = new ComparatorTop10();
 		
-		if (top10.size() < 10)
+		if (top10.size() < 10 && !top10.contains(empresa))
 		{
 			top10.add(empresa);
 		}

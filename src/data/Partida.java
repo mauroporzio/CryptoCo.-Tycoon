@@ -2,11 +2,9 @@ package data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-//import jdk.internal.org.jline.reader.impl.history.DefaultHistory;
 
-public class Partida implements IProbabilidad, Serializable
+public class Partida implements Serializable
 {
 	private static final long serialVersionUID = 1L;
 
@@ -24,7 +22,7 @@ public class Partida implements IProbabilidad, Serializable
 	{
 		this.eventos = new ArrayList<Evento>();
 		this.competencia = new ArrayList<EmpresaEnemiga>();
-		this.eventos = generarEventos();           //falta hacer la funcion de carga de los eventos desde el archivo. TEMPORAL
+		cargarEventos();          //falta hacer la funcion de carga de los eventos desde el archivo. TEMPORAL
 		this.competencia = competencia;
 		this.empresa = empresa;
 		setDificultad(dificultad);
@@ -34,7 +32,7 @@ public class Partida implements IProbabilidad, Serializable
 	public Partida(EmpresaUsuario empresa, ArrayList<EmpresaEnemiga> competencia, int dificultad) //constructor para nueva partida.
 	{
 		this.eventos = new ArrayList<Evento>();
-		this.eventos = generarEventos();              //falta hacer la funcion de carga de los eventos desde el archivo. TEMPORAL
+		cargarEventos(); 
 		this.competencia = new ArrayList<EmpresaEnemiga>();
 		this.competencia = competencia;
 		this.empresa = empresa;
@@ -44,7 +42,7 @@ public class Partida implements IProbabilidad, Serializable
 	
 	public void cargarEventos() // guarda el arreglo de eventos que vienen del archivo correspondiente
 	{
-		this.eventos = new Util().leerEventos(nombreArchivoEventos);
+		this.eventos = new Util().leerEventos();
 	}
 	
 	public int getDificultad() { return this.dificultad; }
@@ -58,24 +56,6 @@ public class Partida implements IProbabilidad, Serializable
 
 	public int getMes(){ return this.mes; }
 	
-	public static ArrayList<Evento> generarEventos() //TEMPORAL
-	{
-		ArrayList<Evento> eventos = new ArrayList<Evento>();
-		int i = 0;
-		int max = 10;
-		
-		for(i=0;i<max;i++)
-		{
-			String aux = new String();
-			aux = "evento n°"+i;
-			
-			Evento evento1 = new Evento(aux,aux,false);
-			
-			eventos.add(evento1);
-		}
-		
-		return eventos;
-	}
 	
 	public ArrayList<Evento> getArrayEventos()
 	{
@@ -83,21 +63,15 @@ public class Partida implements IProbabilidad, Serializable
 	}
 
 	public void actualizacionInicioMes(double ganancia) {
-		this.empresa.setPatrimonio(ganancia);
-		this.mes++;
+		this.empresa.setPatrimonio(this.empresa.getPatrimonio() + (ganancia) + (this.empresa.calcularGananciaClientes()));
+		this.mes = this.mes + 1;
 	}
 	
-	public void actualizacionFinDeMes(){	//a terminar
+	public void actualizacionFinDeMes() {
 		this.empresa.aumentarClientes(dificultad);
 		this.empresa.setHistorialPatrimonio(getMes(), this.empresa.getPatrimonio());
 	}
-	
-	@Override
-	public int calcularProbabilidad() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-	
+
 	@Override
 	public String toString() {
 		return "Partida actual [Nombre de la empresa: "+empresa.getNombre()+" | CEO: "+empresa.getCEO()+" | Dificultad: "+getDificultad()+" ]";

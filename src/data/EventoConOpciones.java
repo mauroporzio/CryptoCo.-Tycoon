@@ -10,7 +10,7 @@ public class EventoConOpciones extends Evento
 	
 	public EventoConOpciones(String nombre, String descripcion, boolean activo, ArrayList<String> opciones, ArrayList<Integer> datos) 
 	{
-		super(nombre, descripcion, activo);
+		super(nombre, descripcion, activo,0);
 		this.opciones = opciones;
 		this.datos = datos;
 	}
