@@ -15,15 +15,15 @@ public class EmpresaEnemiga extends Empresa
 
 		if(dificultad == 1)
 		{
-			setPatrimonio(10000 + rand.nextInt(30000));
+			setPatrimonio(10000 + rand.nextInt(50000));
 		}
 		else if (dificultad == 2)
 		{
-			setPatrimonio(50000 + rand.nextInt());
+			setPatrimonio(50000 + rand.nextInt(50000));
 		}
 		else
 		{
-			setPatrimonio(100000 + rand.nextInt());
+			setPatrimonio(100000 + rand.nextInt(50000));
 		}
 		
 		
