@@ -248,9 +248,6 @@ public class Main {
 		int opc = 3;
 		do
 		{
-			/*if(opc == 3){
-				partida = novedadesEventos(partida);
-			}*/
 			opc = menuJuego();
 			switch(opc)
 			{
@@ -319,7 +316,7 @@ public class Main {
 			
 			while(activos.contains(evento))
 			{
-				aux = rand.nextInt(1+partida.getArrayEventos().size())-1;
+				aux = rand.nextInt(partida.getArrayEventos().size());
 				evento = partida.getArrayEventos().get(aux);
 			}
 			
