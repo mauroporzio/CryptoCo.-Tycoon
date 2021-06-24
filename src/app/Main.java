@@ -319,7 +319,7 @@ public class Main {
 			
 			while(activos.contains(evento))
 			{
-				aux = rand.nextInt();
+				aux = rand.nextInt(1+partida.getArrayEventos().size())-1;
 				evento = partida.getArrayEventos().get(aux);
 			}
 			
@@ -456,7 +456,7 @@ public class Main {
 					case 2:	//Muestra el historial de patrimonios desde que se creo la empresa hasta la fecha actual
 						if(n > 0) {	//Verifica que haya algo que mostrar
 							for(int i = 1; i < empresa.getHistorialPatrimonio().size()+1 ; i++){ 
-								System.out.println("   Mes <" + i + ">: $" + empresa.mesEspecificoPatrimonio(i));
+								System.out.println("   Mes <" + i + ">: $" + empresa.mesEspecificoPatrimonio(i+1));
 							}
 						}else {
 							System.out.println("Historial vacio, a partir del segundo mes se habilitara!");
